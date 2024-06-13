@@ -7,8 +7,8 @@ export default {
       }
     }
   },
-  beforeDestroy() {
-    if (!this.$route.fullPath.includes('trident')) {
+  beforeRouteLeave(to: any, from: any, next: any) {
+    if (!to.fullPath.includes('trident')) {
       const elements = document.getElementsByClassName('dashboard-root');
       for (let el of elements) {
         if (el.classList.contains('idp-container')) {
@@ -16,5 +16,6 @@ export default {
         }
       }
     }
+    next()
   },
 }
