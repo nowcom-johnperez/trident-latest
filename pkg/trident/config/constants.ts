@@ -1,0 +1,9 @@
+export const PRODUCT_NAME = 'trident';
+export const PRODUCT_ROUTE_NAME = 'trident';
+export const BLANK_CLUSTER = '_';
+export const CUSTOM_K8S_RESOURCE_NAME = 'trident';
+export const TRIDENT_PAGE_NAME = 'Local Testing';
+export const DEV_TOOLS_PAGE_NAME = 'Dev Tools';
+export const WIKI_PAGE_NAME = 'Wiki';
+export const HOME = 'Home';
+export const WISH_PAGE_NAME = 'Wish';

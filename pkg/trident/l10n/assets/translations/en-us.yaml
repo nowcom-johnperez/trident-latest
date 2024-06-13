@@ -1,0 +1,6 @@
+product:
+  labels:
+    home: Home
+    localTesting: Trident Local Testing
+    devTools: Dev Tools
+    wiki: Wiki
