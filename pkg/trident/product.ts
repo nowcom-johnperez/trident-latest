@@ -1,7 +1,7 @@
 import { PRODUCT_NAME, PRODUCT_ROUTE_NAME, BLANK_CLUSTER, CUSTOM_K8S_RESOURCE_NAME, TRIDENT_PAGE_NAME, WIKI_PAGE_NAME, HOME, DEV_TOOLS_PAGE_NAME } from './config/constants';
 import { IPlugin } from '@shell/core/types';
 export function init($plugin: IPlugin, store: any) {
-  const { product, basicType, virtualType, weightType } = $plugin.DSL(store, PRODUCT_NAME);
+  const { product, basicType, virtualType, weightType } = $plugin.DSL(store, PRODUCT_NAME) as any;
 
   product({
     icon:    'application',
