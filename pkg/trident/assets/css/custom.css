@@ -128,6 +128,25 @@ background-color: #4caf50;
   border-radius: 0;
 }
 
+.btn-x-modal {
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.btn-x-modal:hover, .btn-x-modal:focus {
+  background-color: #297db4;
+  border-color: #0d73b8;
+  box-shadow: none;
+  border-radius: 0;
+}
+
 .x-icon {
   color: black;
   font-size: 24px;

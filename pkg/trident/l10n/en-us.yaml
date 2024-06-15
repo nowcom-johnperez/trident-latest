@@ -1,0 +1,9 @@
+product:
+  labels:
+    home: Home
+    localTesting: Local Testing
+    devTools: Dev Tools
+    wiki: Wiki
+home:
+  seeWhatsNew: See what is new with Trident
+  whatsNewLink: See more

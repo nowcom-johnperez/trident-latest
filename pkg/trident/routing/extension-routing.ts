@@ -19,16 +19,16 @@ const routes = [
       pkg:     PRODUCT_NAME
     }
   },
-  {
-    name: `${PRODUCT_ROUTE_NAME}-c-cluster-${HOME}1`,
-    path: `/${PRODUCT_ROUTE_NAME}/c/:cluster/${HOME}1`,
-    component: HomePage1,
-    meta: {
-      product: PRODUCT_NAME,
-      cluster: BLANK_CLUSTER,
-      pkg:     PRODUCT_NAME
-    }
-  },
+  // {
+  //   name: `${PRODUCT_ROUTE_NAME}-c-cluster-${HOME}1`,
+  //   path: `/${PRODUCT_ROUTE_NAME}/c/:cluster/${HOME}1`,
+  //   component: HomePage1,
+  //   meta: {
+  //     product: PRODUCT_NAME,
+  //     cluster: BLANK_CLUSTER,
+  //     pkg:     PRODUCT_NAME
+  //   }
+  // },
   {
     name:      `${ PRODUCT_ROUTE_NAME }-c-cluster-${ TRIDENT_PAGE_NAME }`,
     path:      `/${ PRODUCT_ROUTE_NAME }/c/:cluster/${TRIDENT_PAGE_NAME}`,

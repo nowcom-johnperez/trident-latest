@@ -1,7 +1,7 @@
 import { PRODUCT_NAME, PRODUCT_ROUTE_NAME, BLANK_CLUSTER, CUSTOM_K8S_RESOURCE_NAME, TRIDENT_PAGE_NAME, WIKI_PAGE_NAME, HOME, DEV_TOOLS_PAGE_NAME } from './config/constants';
 import { IPlugin } from '@shell/core/types';
 export function init($plugin: IPlugin, store: any) {
-  const { product, basicType, virtualType } = $plugin.DSL(store, PRODUCT_NAME);
+  const { product, basicType, virtualType, weightType } = $plugin.DSL(store, PRODUCT_NAME);
 
   product({
     icon:    'application',
@@ -35,7 +35,7 @@ export function init($plugin: IPlugin, store: any) {
   //     }
   //   }
   // });
-
+  weightType(HOME, 1004, true)
   virtualType({
     labelKey: 'product.labels.home',
     name: HOME,
@@ -60,7 +60,7 @@ export function init($plugin: IPlugin, store: any) {
   //   }
   // });
 
-  // creating a custom page
+  weightType(TRIDENT_PAGE_NAME, 1005, true)
   virtualType({
     labelKey: 'product.labels.localTesting',
     name:     TRIDENT_PAGE_NAME,
@@ -73,6 +73,7 @@ export function init($plugin: IPlugin, store: any) {
     }
   });
 
+  weightType(DEV_TOOLS_PAGE_NAME, 1002, true)
   virtualType({
     labelKey: 'product.labels.devTools',
     name:     DEV_TOOLS_PAGE_NAME,
@@ -85,7 +86,7 @@ export function init($plugin: IPlugin, store: any) {
     }
   });
 
-  // creating a custom page
+  weightType(WIKI_PAGE_NAME, 1001, true)
   virtualType({
     labelKey: 'product.labels.wiki',
     name:     WIKI_PAGE_NAME,
@@ -99,9 +100,8 @@ export function init($plugin: IPlugin, store: any) {
   });
 
   // registering the defined pages as side-menu entries
-  basicType([HOME, TRIDENT_PAGE_NAME, DEV_TOOLS_PAGE_NAME, WIKI_PAGE_NAME]);
-  // weightType(HOME, 1004, true)
-  // weightType(TRIDENT_PAGE_NAME, 1003, true)
-  // weightType(DEV_TOOLS_PAGE_NAME, 1002, true)
-  // weightType(WIKI_PAGE_NAME, 1001, true)
+  basicType([HOME]);
+  basicType([TRIDENT_PAGE_NAME]);
+  basicType([DEV_TOOLS_PAGE_NAME]);
+  basicType([WIKI_PAGE_NAME]);
 }
