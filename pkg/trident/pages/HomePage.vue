@@ -14,12 +14,7 @@
         <div style="margin-right: auto;">
           {{ t('home.seeWhatsNew') }}
         </div>
-        <a
-          class="hand"
-          :href="`/Network/c/_/roadmap`"
-        >
-          <span v-clean-html="t('home.whatsNewLink')" />
-        </a>
+        <router-link to="/Network/c/_/roadmap" class="hand"><span v-clean-html="t('home.whatsNewLink')" /></router-link>
       </Banner>
     </div>
     
