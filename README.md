@@ -11,11 +11,12 @@
 command
 - yarn publish-pkgs -s `{github_username}/{repository}` -b `{branch}` -f
 
-- `-s` - <repo>
-- `-b` - <branch>
+- `-s` - {repo}
+- `-b` - {branch}
 - `-f` - force build charts
 
 - refer here `https://extensions.rancher.io/extensions/publishing`
 
-
+- after doing this, copy the `index.yaml` from `assets/index.yaml` and paste it to root `index.yaml`
+- this ensures that the latest version shows up as available installable / upgradable version of package.
 
