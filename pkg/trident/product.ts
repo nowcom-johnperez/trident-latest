@@ -1,7 +1,13 @@
 import { PRODUCT_NAME, PRODUCT_ROUTE_NAME, BLANK_CLUSTER, CUSTOM_K8S_RESOURCE_NAME, TRIDENT_PAGE_NAME, WIKI_PAGE_NAME, HOME, DEV_TOOLS_PAGE_NAME } from './config/constants';
+<<<<<<< HEAD
 // import { IPlugin } from '@shell/core/types';
 export function init($plugin: any, store: any) {
   const { product, basicType, virtualType } = $plugin.DSL(store, PRODUCT_NAME);
+=======
+import { IPlugin } from '@shell/core/types';
+export function init($plugin: IPlugin, store: any) {
+  const { product, basicType, virtualType, weightType } = $plugin.DSL(store, PRODUCT_NAME) as any;
+>>>>>>> 2f8fa8aa3 (update v0.1.0)
 
   product({
     icon:    'application',
