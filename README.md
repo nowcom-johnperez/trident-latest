@@ -22,10 +22,10 @@ command
 
 ### GITHUB
 ```
-yarn publish-pkgs -s nowcom-johnperez/infrastructure -b main -f
+yarn publish-pkgs -s nowcom-johnperez/trident-latest -b main -f
 ```
 
-### GITLAB
+### GITLAB (THIS IS NOT WORKING)
 ```
 yarn publish-pkgs -s nowcom/infrard/trident-extension-package -b main -f
 ```
