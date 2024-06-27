@@ -12,3 +12,6 @@ Release v0.1.0
 -  Added "Make a Wish"
 -  Implement Rancher Components
 -  Implement Pagination for tables
+
+Release v0.1.1
+- Added App-Launcher

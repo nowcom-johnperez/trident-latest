@@ -20,3 +20,14 @@ command
 - after doing this, copy the `index.yaml` from `assets/index.yaml` and paste it to root `index.yaml`
 - this ensures that the latest version shows up as available installable / upgradable version of package.
 
+### GITHUB
+```
+yarn publish-pkgs -s nowcom-johnperez/infrastructure -b main -f
+```
+
+### GITLAB
+```
+yarn publish-pkgs -s nowcom/infrard/trident-extension-package -b main -f
+```
+- go to charts > trident > version > cr.yaml
+- change raw.githubusercontent.com -> gitlab.com
