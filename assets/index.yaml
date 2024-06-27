@@ -14,25 +14,37 @@ entries:
       catalog.cattle.io/ui-extensions-version: '>= 1.1.0'
       catalog.cattle.io/ui-version: '>= 2.7.7-0 < 2.9.0-0'
     apiVersion: v2
+    appVersion: 0.1.1
+    created: "2024-06-27T09:29:35.414316+08:00"
+    description: Trident simplifies setup and management of Kubernetes clusters, enabling
+      each team to quickly and effortlessly create their own testing environments.
+    digest: 76a5692cb1530f5f286d391704a993d4a3a959846d32fd5f65c53d8f43e84f1e
+    name: trident
+    type: application
+    urls:
+    - assets/trident/trident-0.1.1.tgz
+    version: 0.1.1
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/display-name: Trident
+      catalog.cattle.io/kube-version: '>= v1.26.0-0 < v1.29.0-0'
+      catalog.cattle.io/namespace: cattle-ui-plugin-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux, windows
+      catalog.cattle.io/rancher-version: '>= 2.7.7-0 < 2.9.0-0'
+      catalog.cattle.io/scope: management
+      catalog.cattle.io/ui-component: plugins
+      catalog.cattle.io/ui-extensions-version: '>= 1.1.0'
+      catalog.cattle.io/ui-version: '>= 2.7.7-0 < 2.9.0-0'
+    apiVersion: v2
     appVersion: 0.1.0
-<<<<<<< HEAD
-    created: "2024-06-15T09:29:35.02597+08:00"
+    created: "2024-06-27T09:29:35.414176+08:00"
     description: Trident simplifies setup and management of Kubernetes clusters, enabling
       each team to quickly and effortlessly create their own testing environments.
     digest: 4bda639f36398ad915f463cba0269003008c03f7c1a11786a5cf21ab727c765d
-=======
-    created: "2024-06-15T09:15:52.17068+08:00"
-    description: Trident simplifies setup and management of Kubernetes clusters, enabling
-      each team to quickly and effortlessly create their own testing environments.
-    digest: 43875603640c098b8049eef1aa76fb53866d19a4baae05349ebf632d3df784b0
->>>>>>> 2f8fa8aa3 (update v0.1.0)
     name: trident
     type: application
     urls:
     - assets/trident/trident-0.1.0.tgz
     version: 0.1.0
-<<<<<<< HEAD
-generated: "2024-06-15T09:29:35.024546+08:00"
-=======
-generated: "2024-06-15T09:15:52.170219+08:00"
->>>>>>> 2f8fa8aa3 (update v0.1.0)
+generated: "2024-06-27T09:29:35.413687+08:00"
