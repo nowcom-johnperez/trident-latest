@@ -7,3 +7,4 @@ export const DEV_TOOLS_PAGE_NAME = 'dev-tools';
 export const WIKI_PAGE_NAME = 'wiki';
 export const HOME = 'home';
 export const WISH_PAGE_NAME = 'wish';
+export const SAMPLE_PAGE = 'krum-sample';

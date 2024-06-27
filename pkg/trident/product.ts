@@ -1,13 +1,7 @@
-import { PRODUCT_NAME, PRODUCT_ROUTE_NAME, BLANK_CLUSTER, CUSTOM_K8S_RESOURCE_NAME, TRIDENT_PAGE_NAME, WIKI_PAGE_NAME, HOME, DEV_TOOLS_PAGE_NAME } from './config/constants';
-<<<<<<< HEAD
+import { PRODUCT_NAME, PRODUCT_ROUTE_NAME, BLANK_CLUSTER, CUSTOM_K8S_RESOURCE_NAME, TRIDENT_PAGE_NAME, WIKI_PAGE_NAME, HOME, DEV_TOOLS_PAGE_NAME, SAMPLE_PAGE } from './config/constants';
 // import { IPlugin } from '@shell/core/types';
 export function init($plugin: any, store: any) {
   const { product, basicType, virtualType } = $plugin.DSL(store, PRODUCT_NAME);
-=======
-import { IPlugin } from '@shell/core/types';
-export function init($plugin: IPlugin, store: any) {
-  const { product, basicType, virtualType, weightType } = $plugin.DSL(store, PRODUCT_NAME) as any;
->>>>>>> 2f8fa8aa3 (update v0.1.0)
 
   product({
     icon:    'application',
@@ -109,9 +103,23 @@ export function init($plugin: IPlugin, store: any) {
     }
   });
 
+  virtualType({
+    labelKey: 'product.app-launcher',
+    name:     SAMPLE_PAGE,
+    weight: 1,
+    route:    {
+      name:   `${ PRODUCT_ROUTE_NAME }-c-cluster-${ SAMPLE_PAGE }`,
+      params: {
+        product: PRODUCT_NAME,
+        cluster: BLANK_CLUSTER
+      }
+    }
+  });
+
   // registering the defined pages as side-menu entries
   basicType([HOME]);
   basicType([TRIDENT_PAGE_NAME]);
   basicType([DEV_TOOLS_PAGE_NAME]);
   basicType([WIKI_PAGE_NAME]);
+  basicType([SAMPLE_PAGE]);
 }
