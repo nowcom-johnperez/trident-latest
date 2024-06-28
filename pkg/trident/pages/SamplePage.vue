@@ -106,6 +106,7 @@ export default {
     async getClusters() {
       return await this.$store.dispatch(`management/findAll`, {
         type: MANAGEMENT.CLUSTER,
+        kind: 'namespaces'
       });
     },
     getCluster(clusterId) {

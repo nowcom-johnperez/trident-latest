@@ -39,7 +39,7 @@ export function init($plugin: any, store: any) {
   virtualType({
     labelKey: 'product.labels.home',
     name: HOME,
-    weight: 4,
+    weight: 5,
     route: {
       name: `${PRODUCT_ROUTE_NAME}-c-cluster-${HOME}`,
       params: {
@@ -65,7 +65,7 @@ export function init($plugin: any, store: any) {
   virtualType({
     labelKey: 'product.labels.localTesting',
     name:     TRIDENT_PAGE_NAME,
-    weight: 3,
+    weight: 4,
     route:    {
       name:   `${ PRODUCT_ROUTE_NAME }-c-cluster-${ TRIDENT_PAGE_NAME }`,
       params: {
@@ -79,7 +79,7 @@ export function init($plugin: any, store: any) {
   virtualType({
     labelKey: 'product.labels.devTools',
     name:     DEV_TOOLS_PAGE_NAME,
-    weight: 2,
+    weight: 3,
     route:    {
       name:   `${ PRODUCT_ROUTE_NAME }-c-cluster-${ DEV_TOOLS_PAGE_NAME }`,
       params: {
@@ -93,7 +93,7 @@ export function init($plugin: any, store: any) {
   virtualType({
     labelKey: 'product.labels.wiki',
     name:     WIKI_PAGE_NAME,
-    weight: 1,
+    weight: 2,
     route:    {
       name:   `${ PRODUCT_ROUTE_NAME }-c-cluster-${ WIKI_PAGE_NAME }`,
       params: {
@@ -103,23 +103,23 @@ export function init($plugin: any, store: any) {
     }
   });
 
-  virtualType({
-    labelKey: 'product.app-launcher',
-    name:     SAMPLE_PAGE,
-    weight: 1,
-    route:    {
-      name:   `${ PRODUCT_ROUTE_NAME }-c-cluster-${ SAMPLE_PAGE }`,
-      params: {
-        product: PRODUCT_NAME,
-        cluster: BLANK_CLUSTER
-      }
-    }
-  });
+  // virtualType({
+  //   labelKey: 'product.app-launcher',
+  //   name:     SAMPLE_PAGE,
+  //   weight: 1,
+  //   route:    {
+  //     name:   `${ PRODUCT_ROUTE_NAME }-c-cluster-${ SAMPLE_PAGE }`,
+  //     params: {
+  //       product: PRODUCT_NAME,
+  //       cluster: BLANK_CLUSTER
+  //     }
+  //   }
+  // });
 
   // registering the defined pages as side-menu entries
   basicType([HOME]);
   basicType([TRIDENT_PAGE_NAME]);
   basicType([DEV_TOOLS_PAGE_NAME]);
   basicType([WIKI_PAGE_NAME]);
-  basicType([SAMPLE_PAGE]);
+  // basicType([SAMPLE_PAGE]);
 }

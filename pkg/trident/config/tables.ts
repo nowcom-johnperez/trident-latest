@@ -17,24 +17,31 @@ interface SortableHeaderType {
 
 const TRIDENT_TABLE_HEADERS: SortableHeaderType[] = [
   {
-      name: 'title',
+      name: 'metadata.name',
       label: 'Title',
-      sort: ['title'],
-      search: ['title'],
+      sort: ['metadata.name'],
+      search: ['metadata.name'],
       width: 10,
   },
+  // {
+  //     name: 'description',
+  //     label: 'Description',
+  //     sort: ['description'],
+  //     search: ['description'],
+  //     width: 10
+  // },
   {
-      name: 'description',
-      label: 'Description',
-      sort: ['description'],
-      search: ['description'],
+      name: 'clusterName',
+      label: 'Cluster Name',
+      sort: ['clusterName'],
+      search: ['clusterName'],
       width: 10
   },
   {
-      name: 'ip',
+      name: 'spec.clusterIP',
       label: 'IP',
-      sort: ['ip'],
-      search: ['ip'],
+      sort: ['spec.clusterIP'],
+      search: ['spec.clusterIP'],
       width: 10
   },
   {
@@ -57,6 +64,13 @@ const TRIDENT_TABLE_HEADERS: SortableHeaderType[] = [
     sort: ['rancher'],
     search: ['rancher'],
     width: 10
+  },
+  {
+    name: 'actions',
+    label: 'Actions',
+    sort: [],
+    search: [],
+    width: 5
   },
 ];
 

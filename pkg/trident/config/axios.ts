@@ -1,6 +1,7 @@
 import https from 'https';
 import axios from "axios";
-import { BEARERTOKEN, NETWORK_URL_V2, RANCHER_DIRECT_URL, RANCHER_BEARERTOKEN } from "./api";
+import { getConfig } from './api';
+const { BEARERTOKEN, NETWORK_URL_V2, RANCHER_DIRECT_URL, RANCHER_BEARERTOKEN } = getConfig();
 
 export const INSTANCE_V2 = axios.create({
     baseURL:    NETWORK_URL_V2,
