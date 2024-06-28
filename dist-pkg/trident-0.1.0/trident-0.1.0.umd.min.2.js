@@ -1,2 +1,0 @@
-(("undefined"!==typeof self?self:this)["webpackJsonptrident_0_1_0"]=("undefined"!==typeof self?self:this)["webpackJsonptrident_0_1_0"]||[]).push([[2],{"1bb6":function(e,s){const t=[{product:{labels:{home:"Home",localTesting:"Local Testing",devTools:"Dev Tools",wiki:"Wiki"}},home:{seeWhatsNew:"See what is new with Trident",whatsNewLink:"See more"}}];e.exports=t.length<=1?t[0]:t}}]);
-//# sourceMappingURL=trident-0.1.0.umd.min.2.js.map

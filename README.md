@@ -31,3 +31,17 @@ yarn publish-pkgs -s nowcom/infrard/trident-extension-package -b main -f
 ```
 - go to charts > trident > version > cr.yaml
 - change raw.githubusercontent.com -> gitlab.com
+
+### GITLAB Container Registry
+running this script requires the ff:
+- make
+- docker
+- go
+- nodejs ( >= 12.0.0 < 17.0.0 )
+- yarn
+- jq
+- yq ( >= 4.0.0 )
+- helm ( >= 3.0.0 )
+```
+yarn publish-pkgs -c -p -r https://gitlab.com/nowcom/infrard/trident-extension-package/container_registry -o trident
+```
