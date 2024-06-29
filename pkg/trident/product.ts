@@ -103,23 +103,23 @@ export function init($plugin: any, store: any) {
     }
   });
 
-  // virtualType({
-  //   labelKey: 'product.app-launcher',
-  //   name:     SAMPLE_PAGE,
-  //   weight: 1,
-  //   route:    {
-  //     name:   `${ PRODUCT_ROUTE_NAME }-c-cluster-${ SAMPLE_PAGE }`,
-  //     params: {
-  //       product: PRODUCT_NAME,
-  //       cluster: BLANK_CLUSTER
-  //     }
-  //   }
-  // });
+  virtualType({
+    labelKey: 'product.app-launcher',
+    name:     SAMPLE_PAGE,
+    weight: 1,
+    route:    {
+      name:   `${ PRODUCT_ROUTE_NAME }-c-cluster-${ SAMPLE_PAGE }`,
+      params: {
+        product: PRODUCT_NAME,
+        cluster: BLANK_CLUSTER
+      }
+    }
+  });
 
   // registering the defined pages as side-menu entries
   basicType([HOME]);
   basicType([TRIDENT_PAGE_NAME]);
   basicType([DEV_TOOLS_PAGE_NAME]);
   basicType([WIKI_PAGE_NAME]);
-  // basicType([SAMPLE_PAGE]);
+  basicType([SAMPLE_PAGE]);
 }

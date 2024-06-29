@@ -31,6 +31,13 @@ const TRIDENT_TABLE_HEADERS: SortableHeaderType[] = [
   //     width: 10
   // },
   {
+      name: 'metadata.namespace',
+      label: 'Namespace',
+      sort: ['metadata.namespace'],
+      search: ['metadata.namespace'],
+      width: 10
+  },
+  {
       name: 'clusterName',
       label: 'Cluster Name',
       sort: ['clusterName'],
@@ -38,10 +45,10 @@ const TRIDENT_TABLE_HEADERS: SortableHeaderType[] = [
       width: 10
   },
   {
-      name: 'spec.clusterIP',
+      name: 'nodeIP',
       label: 'IP',
-      sort: ['spec.clusterIP'],
-      search: ['spec.clusterIP'],
+      sort: ['nodeIP'],
+      search: ['nodeIP'],
       width: 10
   },
   {

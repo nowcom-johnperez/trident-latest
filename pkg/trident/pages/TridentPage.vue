@@ -17,15 +17,28 @@
         <template #cell:metadata.name="{row}">
           <a href="#" @click.prevent="openSidebar(row)">{{ row.metadata.name }}</a>
         </template>
-        <template #cell:spec.clusterIP="{row}">
-          <CopyToClipboardText :text="row.spec.clusterIP" />
+        <template #cell:nodeIP="{row}">
+          <ul class="ip-listing">
+            <li v-for="ip in row.nodeIP" :key="`${ip}-${row.metadata.namespace}`">
+              <CopyToClipboardText :text="ip" />
+            </li>
+          </ul>
         </template>
         <template #cell:actions="{ row }">
           <div style="display: flex; justify-content: flex-start;">
             <a
-              v-if="getEndpoints(row)?.length <= 1"
+              v-if="getEndpoints(row)?.length <= 1 && row.kind === 'Service'"
               :href="getEndpoints(row)[0]?.value" target="_blank"
               rel="noopener noreferrer nofollow" class="btn role-primary">
+              {{ t('appLauncher.launch') }}
+            </a>
+            <a
+              v-else-if="row.kind === 'Ingress'"
+              :href="getIngressPath(row)"
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              class="btn role-primary"
+            >
               {{ t('appLauncher.launch') }}
             </a>
             <ButtonDropDown
@@ -55,6 +68,7 @@ import { TRIDENT_TABLE_HEADERS } from '../config/tables'
 import routeInit from '../mixins/init'
 import ButtonDropDown from '@shell/components/ButtonDropdown';
 import { isMaybeSecure } from '@shell/utils/url';
+import { ingressFullPath } from '@shell/models/networking.k8s.io.ingress';
 export default {
   name: 'Trident',
   mixins: [routeInit],
@@ -92,7 +106,10 @@ export default {
         // }));
         return this.servicesByCluster.map((cluster) => {
           return this.filteredApps(cluster.services, this.ingressesByCluster.find(ingressCluster => ingressCluster.id === cluster.id)?.ingresses || [])
-        }).flat().filter((service) => !service.metadata?.namespace.includes('cattle-') && !service.metadata?.namespace.includes('kube-') );
+        }).flat().filter((service) => !service.metadata?.namespace.includes('cattle-') && !service.metadata?.namespace.includes('kube-') && service.kind === 'Ingress' );
+        // return this.ingressesByCluster.map((cluster) => {
+        //   return this.filteredApps(cluster.services, this.ingressesByCluster.find(ingressCluster => ingressCluster.id === cluster.id)?.ingresses || [])
+        // }).flat().filter((service) => !service.metadata?.namespace.includes('cattle-') && !service.metadata?.namespace.includes('kube-') );
       }
       return [];
     },
@@ -113,33 +130,6 @@ export default {
       const allClusters = await this.getClusters();
       this.servicesByCluster = await this.getServicesByCluster(allClusters);
       this.ingressesByCluster = await this.getIngressesByCluster(allClusters);
-      this.selectedCluster = "ALL_CLUSTERS";
-
-      // Retrieve global services based on annotations
-      this.servicesByCluster.forEach((cluster) => {
-        cluster.services.forEach((service) => {
-          if (service.metadata?.annotations?.['extensions.applauncher/global-app'] === 'true') {
-            this.favoritedApps.push({
-              ...service,
-              clusterId: cluster.id,
-              clusterName: cluster.name,
-            });
-          }
-        });
-      });
-
-      // Retrieve global ingresses based on annotations
-      this.ingressesByCluster.forEach((cluster) => {
-        cluster.ingresses.forEach((ingress) => {
-          if (ingress.metadata?.annotations?.['extensions.applauncher/global-app'] === 'true') {
-            this.favoritedApps.push({
-              ...ingress,
-              clusterId: cluster.id,
-              clusterName: cluster.name,
-            });
-          }
-        });
-      });
     } catch (error) {
       console.error('Error fetching clusters', error);
     } finally {
@@ -157,7 +147,6 @@ export default {
     async getClusters() {
       return await this.$store.dispatch(`management/findAll`, {
         type: MANAGEMENT.CLUSTER,
-        kind: 'namespaces'
       });
     },
     async getServicesByCluster(allClusters) {
@@ -218,6 +207,7 @@ export default {
                 ...ingress,
                 clusterId: cluster.id,
                 clusterName: cluster.spec.displayName,
+                nodeIP: ingress.status?.loadBalancer?.ingress?.map((node) => node.ip) || []
               }));
             } catch (error) {
               console.error(`Error fetching ingresses for cluster ${cluster.id}:`, error);
@@ -242,6 +232,11 @@ export default {
         }) ?? []
       );
     },
+
+    getIngressPath(row) {
+      return ingressFullPath(row, row?.spec?.rules?.[0]) || '';
+    },
+    
     openLink(option) {
       window.open(option.value, '_blank');
     },
@@ -277,3 +272,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+ul.ip-listing {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
