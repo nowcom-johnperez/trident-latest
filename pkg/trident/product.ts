@@ -8,7 +8,7 @@ export function init($plugin: any, store: any) {
     inStore: 'management',
     weight:  100,
     to:      {
-      name:      `${PRODUCT_NAME}-c-cluster-${HOME}`,
+      name:      `${PRODUCT_NAME}-c-cluster-${TRIDENT_PAGE_NAME}`,
       params:      {
         product: PRODUCT_NAME,
         cluster: BLANK_CLUSTER,
@@ -117,9 +117,9 @@ export function init($plugin: any, store: any) {
   });
 
   // registering the defined pages as side-menu entries
-  basicType([HOME]);
-  basicType([TRIDENT_PAGE_NAME]);
-  basicType([DEV_TOOLS_PAGE_NAME]);
-  basicType([WIKI_PAGE_NAME]);
-  basicType([SAMPLE_PAGE]);
+  // basicType([HOME]);
+  // basicType([TRIDENT_PAGE_NAME]);
+  // basicType([DEV_TOOLS_PAGE_NAME]);
+  // basicType([WIKI_PAGE_NAME]);
+  // basicType([SAMPLE_PAGE]);
 }

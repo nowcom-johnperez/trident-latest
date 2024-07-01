@@ -77,7 +77,7 @@
       </div>
     </div>
 
-    <div class="card mt-30">
+    <div v-if="false" class="card mt-30">
       <h3>Related Entities</h3>
       <div class="mt-20">
         <div class="row">

@@ -17,11 +17,18 @@ interface SortableHeaderType {
 
 const TRIDENT_TABLE_HEADERS: SortableHeaderType[] = [
   {
-      name: 'metadata.name',
-      label: 'Title',
-      sort: ['metadata.name'],
-      search: ['metadata.name'],
-      width: 10,
+    name: 'clusterName',
+    label: 'Cluster Name',
+    sort: ['clusterName'],
+    search: ['clusterName'],
+    width: 10
+  },
+  {
+    name: 'metadata.name',
+    label: 'Title',
+    sort: ['metadata.name'],
+    search: ['metadata.name'],
+    width: 10,
   },
   // {
   //     name: 'description',
@@ -37,18 +44,19 @@ const TRIDENT_TABLE_HEADERS: SortableHeaderType[] = [
       search: ['metadata.namespace'],
       width: 10
   },
+  
   {
-      name: 'clusterName',
-      label: 'Cluster Name',
-      sort: ['clusterName'],
-      search: ['clusterName'],
+      name: 'nodeIP',
+      label: 'Node IP',
+      sort: ['nodeIP'],
+      search: ['nodeIP'],
       width: 10
   },
   {
-      name: 'nodeIP',
-      label: 'IP',
-      sort: ['nodeIP'],
-      search: ['nodeIP'],
+      name: 'loadBalancerIP',
+      label: 'Load Balancer IP',
+      sort: ['loadBalancerIP'],
+      search: ['loadBalancerIP'],
       width: 10
   },
   {

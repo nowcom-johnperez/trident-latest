@@ -16,6 +16,7 @@
       >
         <template #cell:metadata.name="{row}">
           <a href="#" @click.prevent="openSidebar(row)">{{ row.metadata.name }}</a>
+          <p>{{ getIngressPath(row) }}</p>
         </template>
         <template #cell:nodeIP="{row}">
           <ul class="ip-listing">
@@ -23,6 +24,16 @@
               <CopyToClipboardText :text="ip" />
             </li>
           </ul>
+        </template>
+        <template #cell:loadBalancerIP="{row}">
+          <ul class="ip-listing">
+            <li v-for="ip in row.loadBalancerIP" :key="`${ip}-${row.metadata.namespace}`">
+              <CopyToClipboardText :text="ip" />
+            </li>
+          </ul>
+        </template>
+        <template #cell:repoBranch="{row}">
+          <GithubLink v-if="row.repoBranch" :value="row.repoBranch" />
         </template>
         <template #cell:actions="{ row }">
           <div style="display: flex; justify-content: flex-start;">
@@ -59,10 +70,11 @@
 </template>
 
 <script>
-import { MANAGEMENT } from '@shell/config/types';
+import { MANAGEMENT, FLEET } from '@shell/config/types';
 import CopyToClipboardText from '@shell/components/CopyToClipboardText.vue'
 import SortableTable from '@shell/components/ResourceTable.vue'
 import SideBar from '../components/common/SideBar.vue'
+import GithubLink from '../components/common/GithubLink.vue'
 import Overview from '../components/trident/Overview.vue'
 import { TRIDENT_TABLE_HEADERS } from '../config/tables'
 import routeInit from '../mixins/init'
@@ -72,17 +84,20 @@ import { ingressFullPath } from '@shell/models/networking.k8s.io.ingress';
 export default {
   name: 'Trident',
   mixins: [routeInit],
+  layout: 'plain',
   components: {
     SortableTable,
     SideBar,
     Overview,
     CopyToClipboardText,
-    ButtonDropDown
+    ButtonDropDown,
+    GithubLink
   },
   data() {
     return {
       servicesByCluster: [],
       ingressesByCluster: [],
+      githubList: [],
       loading: false,
       main: {
         headers: [],
@@ -106,19 +121,28 @@ export default {
         // }));
         return this.servicesByCluster.map((cluster) => {
           return this.filteredApps(cluster.services, this.ingressesByCluster.find(ingressCluster => ingressCluster.id === cluster.id)?.ingresses || [])
-        }).flat().filter((service) => !service.metadata?.namespace.includes('cattle-') && !service.metadata?.namespace.includes('kube-') && service.kind === 'Ingress' );
-        // return this.ingressesByCluster.map((cluster) => {
-        //   return this.filteredApps(cluster.services, this.ingressesByCluster.find(ingressCluster => ingressCluster.id === cluster.id)?.ingresses || [])
-        // }).flat().filter((service) => !service.metadata?.namespace.includes('cattle-') && !service.metadata?.namespace.includes('kube-') );
+        }).flat();
       }
       return [];
     },
     filteredApps() {
       return (services, ingresses) => {
-        const sortedApps = [...(services || []), ...(ingresses || [])].sort((a, b) => {
+        const loadBalancerIP = services.filter((service) => service.spec?.type === 'LoadBalancer' && service.metadata?.annotations?.['kube-vip.io/loadbalancerIPs']).map((service) => {
+          return service.metadata?.annotations?.['kube-vip.io/loadbalancerIPs']
+        })
+        const sortedApps = [...(services || []), ...(ingresses || [])].filter((service) => !service.metadata?.namespace.includes('cattle-') && !service.metadata?.namespace.includes('kube-') && service.kind === 'Ingress').sort((a, b) => {
           const nameA = a.metadata.name.toLowerCase();
           const nameB = b.metadata.name.toLowerCase();
           nameB.localeCompare(nameA);
+        }).map((d) => {
+          const github = this.githubList.find((gh) => gh.clusterName === d.clusterName)
+          const githubUrl = github?.spec?.repo && github?.spec?.paths[0] ? `${github?.spec?.repo.replace('.git', '') || ''}/tree/${github?.spec?.branch}${github?.spec?.paths[0] || ''}` : ''
+          return {
+            ...d,
+            loadBalancerIP,
+            repoBranch: githubUrl,
+            github
+          }
         });
 
         return sortedApps;
@@ -127,6 +151,7 @@ export default {
   },
   async mounted() {
     try {
+      await this.getGitHubRepos()
       const allClusters = await this.getClusters();
       this.servicesByCluster = await this.getServicesByCluster(allClusters);
       this.ingressesByCluster = await this.getIngressesByCluster(allClusters);
@@ -143,6 +168,15 @@ export default {
     },
     closeSidebar () {
       this.main.sidebar.show = false;
+    },
+    async getGitHubRepos() {
+      const allGithubRepos = await this.$store.dispatch(`management/findAll`, { type: FLEET.GIT_REPO } )
+      this.githubList = allGithubRepos.map((g) => {
+        return {
+          ...g,
+          clusterName: g.spec.targets.map((target) => target.clusterName)[0]
+        }
+      })
     },
     async getClusters() {
       return await this.$store.dispatch(`management/findAll`, {
@@ -169,7 +203,6 @@ export default {
                   url: `/k8s/clusters/${cluster.id}/v1/services`,
                 })
               ).data;
-              // filter((service) => service.metadata?.namespace === 'dev2')
               clusterData.services = services.map((service) => ({
                 ...service,
                 clusterId: cluster.id,
@@ -234,6 +267,7 @@ export default {
     },
 
     getIngressPath(row) {
+      if (!row.spec?.rules) return ''
       return ingressFullPath(row, row?.spec?.rules?.[0]) || '';
     },
     
