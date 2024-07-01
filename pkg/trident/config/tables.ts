@@ -73,13 +73,13 @@ const TRIDENT_TABLE_HEADERS: SortableHeaderType[] = [
     search: ['repoBranch'],
     width: 10
   },
-  {
-    name: 'rancher',
-    label: 'Rancher',
-    sort: ['rancher'],
-    search: ['rancher'],
-    width: 10
-  },
+  // {
+  //   name: 'rancher',
+  //   label: 'Rancher',
+  //   sort: ['rancher'],
+  //   search: ['rancher'],
+  //   width: 10
+  // },
   {
     name: 'actions',
     label: 'Actions',
