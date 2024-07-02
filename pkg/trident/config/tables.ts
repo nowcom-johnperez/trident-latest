@@ -28,7 +28,7 @@ const TRIDENT_TABLE_HEADERS: SortableHeaderType[] = [
     label: 'Title',
     sort: ['metadata.name'],
     search: ['metadata.name'],
-    width: 10,
+    width: 5,
   },
   // {
   //     name: 'description',
@@ -42,7 +42,7 @@ const TRIDENT_TABLE_HEADERS: SortableHeaderType[] = [
       label: 'Namespace',
       sort: ['metadata.namespace'],
       search: ['metadata.namespace'],
-      width: 10
+      width: 5
   },
   
   {
@@ -64,14 +64,14 @@ const TRIDENT_TABLE_HEADERS: SortableHeaderType[] = [
     label: 'Health Check',
     sort: ['healthCheck'],
     search: ['healthCheck'],
-    width: 10
+    width: 1
   },
   {
     name: 'repoBranch',
     label: 'Repo Branch',
     sort: ['repoBranch'],
     search: ['repoBranch'],
-    width: 10
+    width: 5
   },
   // {
   //   name: 'rancher',

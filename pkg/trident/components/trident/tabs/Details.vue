@@ -19,11 +19,11 @@
       <div v-if="details" class="mt-20 full-width">
         <div class="row">
           <div class="col span-6">
-            <DisplayValue label="Identifier" value="test" />
+            <DisplayValue label="Identifier" :value="details.id" />
           </div>
 
           <div class="col span-6">
-            <DisplayValue label="Title" :value="details.title" />
+            <DisplayValue label="Title" :value="details.metadata.name" />
           </div>
         </div>
 
@@ -39,7 +39,7 @@
         
         <div class="row mt-20">
           <div class="col span-6">
-            <DisplayValue label="IP" :value="details.ip" />
+            <DisplayValue label="IP" :value="details.nodeIP[0]" />
           </div>
 
           <div class="col span-6">
@@ -48,16 +48,14 @@
         </div>
         
         <div class="row mt-20">
-          <div class="col span-6">
+          <!-- <div class="col span-6">
             <DisplayValue label="Rancher" value="" icon="fa-dot-circle-o" />
-          </div>
+          </div> -->
 
           <div class="col span-6">
-            <DisplayValue label="Repo Branch" value="" :editable="editMode" icon="fa-github" @input="handleUpdate" />
+            <DisplayValue label="Repo Branch" :value="details.repoBranch" :editable="editMode" icon="fa-github" @input="handleUpdate" />
           </div>
-        </div>
-        
-        <div class="row mt-20">
+
           <div class="col span-6">
             <DisplayValue label="Description" :value="details.description" :editable="editMode" icon="fa-dot-circle-o" @input="handleUpdate" />
           </div>

@@ -2,12 +2,12 @@
   <div>
     <h1>Local Testing</h1>
 
-    <div class="mt-10">
+    <div class="mt-10 pb-20">
       <SortableTable
         :headers="main.headers" 
         :rows="displayedClusterData" 
         :paging="true" 
-        :rowActionsWidth="10" 
+        :rowActionsWidth="5" 
         :rows-per-page="main.rowsPerPage" 
         keyField="metadata.uid" 
         :loading="main.loading"
@@ -18,9 +18,12 @@
           <a href="#" @click.prevent="openSidebar(row)">{{ row.metadata.name }}</a>
           <p>{{ getIngressPath(row) }}</p>
         </template>
+        <template #cell:clusterName="{row}">
+          <UrlLink :url="`/c/${row.clusterId}/explorer#cluster-events`">{{ row.clusterName }}</UrlLink>
+        </template>
         <template #cell:nodeIP="{row}">
           <ul class="ip-listing">
-            <li v-for="ip in row.nodeIP" :key="`${ip}-${row.metadata.namespace}`">
+            <li v-for="ip in row.nodeIP.slice(0, 3)" :key="`${ip}-${row.metadata.namespace}`">
               <CopyToClipboardText :text="ip" />
             </li>
           </ul>
@@ -75,6 +78,7 @@ import CopyToClipboardText from '@shell/components/CopyToClipboardText.vue'
 import SortableTable from '@shell/components/ResourceTable.vue'
 import SideBar from '../components/common/SideBar.vue'
 import GithubLink from '../components/common/GithubLink.vue'
+import UrlLink from '../components/common/UrlLink.vue'
 import Overview from '../components/trident/Overview.vue'
 import { TRIDENT_TABLE_HEADERS } from '../config/tables'
 import routeInit from '../mixins/init'
@@ -91,7 +95,8 @@ export default {
     Overview,
     CopyToClipboardText,
     ButtonDropDown,
-    GithubLink
+    GithubLink,
+    UrlLink
   },
   data() {
     return {

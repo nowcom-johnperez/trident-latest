@@ -12,28 +12,34 @@
         </div>
 
         <div class="tab-content" :class="{ 'show': currentTab === 1 }">
+          <ul class="ip-listing">
+            <li v-for="ip in detail.nodeIP.slice(0, 3)" :key="`${ip}-${detail.metadata.namespace}`">
+              <CopyToClipboardText :text="ip" />
+            </li>
+          </ul>
           <!-- Runs -->
-          <Runs />
+          <!-- <Runs /> -->
         </div>
 
-        <div class="tab-content" :class="{ 'show': currentTab === 2 }">
+        <!-- <div class="tab-content" :class="{ 'show': currentTab === 2 }"> -->
           <!-- Audit Log -->
-          <p>Audit Log</p>
-        </div>
+          <!-- <p>Audit Log</p> -->
+        <!-- </div> -->
     </div>
   </div>
 </template>
 
 <script>
+import CopyToClipboardText from '@shell/components/CopyToClipboardText.vue'
   import Tabs from '../common/Tabs'
   import Details from './tabs/Details.vue'
-  import Runs from './tabs/Runs.vue'
+  // import Runs from './tabs/Runs.vue'
   export default {
     name: 'Overview',
     components: {
       Tabs,
       Details,
-      Runs
+      CopyToClipboardText
     },
     props: {
       detail: {
@@ -44,7 +50,7 @@
     data() {
       return {
         currentTab: 0, // Initial tab
-        tabList: ['Overview', 'Runs', 'Audit Log'],
+        tabList: ['Overview', 'Node IP'],
       }
     },
     methods: {
