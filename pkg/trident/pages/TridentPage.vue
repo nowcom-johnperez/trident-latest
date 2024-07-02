@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Local Testing</h1>
+    <h1>App Launcher</h1>
 
     <div class="mt-10 pb-20">
       <SortableTable
