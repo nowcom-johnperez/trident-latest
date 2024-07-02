@@ -18,7 +18,7 @@ export default {
   computed: {
       tooltip() {
           return {
-              content: this.url,
+              content: this.url?.path || 'not available',
               hideOnTargetClick: false
           };
       }
