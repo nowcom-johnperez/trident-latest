@@ -19,7 +19,7 @@
           <p>{{ getIngressPath(row) }}</p>
         </template>
         <template #cell:clusterName="{row}">
-          <UrlLink :url="`/c/${row.clusterId}/explorer#cluster-events`">{{ row.clusterName }}</UrlLink>
+          <UrlLink :url="{ path: `/c/${row.clusterId}/explorer#cluster-events`}">{{ row.clusterName }}</UrlLink>
         </template>
         <template #cell:nodeIP="{row}">
           <ul class="ip-listing">

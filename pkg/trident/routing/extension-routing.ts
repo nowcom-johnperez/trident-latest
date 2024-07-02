@@ -10,16 +10,16 @@ import HomePage1 from '../pages/homepage-1.vue';
 import { PRODUCT_NAME, PRODUCT_ROUTE_NAME, BLANK_CLUSTER, TRIDENT_PAGE_NAME, WIKI_PAGE_NAME, HOME, DEV_TOOLS_PAGE_NAME, WISH_PAGE_NAME, SAMPLE_PAGE } from '../config/constants';
 
 const routes = [
-  {
-    name: `${PRODUCT_ROUTE_NAME}-c-cluster-${HOME}`,
-    path: `/${PRODUCT_ROUTE_NAME}/c/:cluster/${HOME}`,
-    component: HomePage,
-    meta: {
-      product: PRODUCT_NAME,
-      cluster: BLANK_CLUSTER,
-      pkg:     PRODUCT_NAME
-    }
-  },
+  // {
+  //   name: `${PRODUCT_ROUTE_NAME}-c-cluster-${HOME}`,
+  //   path: `/${PRODUCT_ROUTE_NAME}/c/:cluster/${HOME}`,
+  //   component: HomePage,
+  //   meta: {
+  //     product: PRODUCT_NAME,
+  //     cluster: BLANK_CLUSTER,
+  //     pkg:     PRODUCT_NAME
+  //   }
+  // },
   // {
   //   name: `${PRODUCT_ROUTE_NAME}-c-cluster-${HOME}1`,
   //   path: `/${PRODUCT_ROUTE_NAME}/c/:cluster/${HOME}1`,

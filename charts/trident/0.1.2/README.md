@@ -15,3 +15,9 @@ Release v0.1.0
 
 Release v0.1.1
 - Added App-Launcher
+
+Release v0.1.2
+- Added Node IP
+- Added Load Balancer IP
+- Added Repo Branch
+- Fetch Github Repo from Fleet

@@ -1,8 +1,8 @@
 <template>
   <span v-clean-tooltip="tooltip" class="hover-container">
-      <a :href="url" target="_blank" rel="noopener noreferrer" class="underline">
+      <router-link :to="url" target="_blank" rel="noopener noreferrer" class="underline">
         <slot></slot>
-      </a>
+      </router-link>
   </span>
 </template>
 
