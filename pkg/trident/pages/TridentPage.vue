@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <Loading v-if="loading" label="Loading data... Please wait..." />
+  <div v-else>
     <h1>App Launcher</h1>
 
     <div class="mt-10 pb-20">
@@ -73,6 +74,7 @@
 </template>
 
 <script>
+import Loading from '@shell/components/Loading';
 import { MANAGEMENT, FLEET } from '@shell/config/types';
 import CopyToClipboardText from '@shell/components/CopyToClipboardText.vue'
 import SortableTable from '@shell/components/ResourceTable.vue'
@@ -96,14 +98,15 @@ export default {
     CopyToClipboardText,
     ButtonDropDown,
     GithubLink,
-    UrlLink
+    UrlLink,
+    Loading
   },
   data() {
     return {
       servicesByCluster: [],
       ingressesByCluster: [],
       githubList: [],
-      loading: false,
+      loading: true,
       main: {
         headers: [],
         rows: [],
@@ -141,7 +144,7 @@ export default {
           nameB.localeCompare(nameA);
         }).map((d) => {
           const github = this.githubList.find((gh) => gh.clusterName === d.clusterName)
-          const githubUrl = github?.spec?.repo && github?.spec?.paths[0] ? `${github?.spec?.repo.replace('.git', '') || ''}/tree/${github?.spec?.branch}${github?.spec?.paths[0] || ''}` : ''
+          const githubUrl = github?.spec?.repo && github?.spec?.paths?.length > 0 ? `${github?.spec?.repo.replace('.git', '') || ''}/tree/${github?.spec?.branch}${github?.spec?.paths[0] || ''}` : ''
           return {
             ...d,
             loadBalancerIP,

@@ -11,7 +11,7 @@ export default {
   name: 'IconLink',
   props: {
       url: {
-          type: String,
+          type: Object | String,
           required: true,
       }
   },
