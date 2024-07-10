@@ -84,6 +84,7 @@ import UrlLink from '../components/common/UrlLink.vue'
 import Overview from '../components/trident/Overview.vue'
 import { TRIDENT_TABLE_HEADERS } from '../config/tables'
 import routeInit from '../mixins/init'
+import { hasAccess } from '../utils/permission'
 import ButtonDropDown from '@shell/components/ButtonDropdown';
 import { isMaybeSecure } from '@shell/utils/url';
 import { ingressFullPath } from '@shell/models/networking.k8s.io.ingress';
@@ -135,7 +136,7 @@ export default {
     },
     filteredApps() {
       return (services, ingresses) => {
-        const loadBalancerIP = services.filter((service) => service.spec?.type === 'LoadBalancer' && service.metadata?.annotations?.['kube-vip.io/loadbalancerIPs']).map((service) => {
+        const loadBalancerIP = services.map((service) => {
           return service.metadata?.annotations?.['kube-vip.io/loadbalancerIPs']
         })
         const sortedApps = [...(services || []), ...(ingresses || [])].filter((service) => !service.metadata?.namespace.includes('cattle-') && !service.metadata?.namespace.includes('kube-') && service.kind === 'Ingress').sort((a, b) => {
@@ -158,8 +159,8 @@ export default {
     },
   },
   async mounted() {
+    await this.getGitHubRepos()
     try {
-      await this.getGitHubRepos()
       const allClusters = await this.getClusters();
       this.servicesByCluster = await this.getServicesByCluster(allClusters);
       this.ingressesByCluster = await this.getIngressesByCluster(allClusters);
@@ -178,6 +179,8 @@ export default {
       this.main.sidebar.show = false;
     },
     async getGitHubRepos() {
+      const hasFleetAccess = await hasAccess(this.$store, FLEET.GIT_REPO)
+      if (!hasFleetAccess) return
       const allGithubRepos = await this.$store.dispatch(`management/findAll`, { type: FLEET.GIT_REPO } )
       this.githubList = allGithubRepos.map((g) => {
         return {
@@ -211,7 +214,7 @@ export default {
                   url: `/k8s/clusters/${cluster.id}/v1/services`,
                 })
               ).data;
-              clusterData.services = services.map((service) => ({
+              clusterData.services = services.filter((service) => service.spec?.type === 'LoadBalancer' && service.metadata?.annotations?.['kube-vip.io/loadbalancerIPs']).map((service) => ({
                 ...service,
                 clusterId: cluster.id,
                 clusterName: cluster.spec.displayName,
