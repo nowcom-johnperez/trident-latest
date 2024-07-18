@@ -145,7 +145,8 @@ export default {
           nameB.localeCompare(nameA);
         }).map((d) => {
           const github = this.githubList.find((gh) => gh.clusterName === d.clusterName)
-          const githubUrl = github?.spec?.repo && github?.spec?.paths?.length > 0 ? `${github?.spec?.repo.replace('.git', '') || ''}/tree/${github?.spec?.branch}${github?.spec?.paths[0] || ''}` : ''
+          const githubUrl = github?.spec?.repo && github?.spec?.paths?.length ? `${github.spec.repo.replace('.git', '')}/tree/${github.spec.branch}${github.spec.paths[0]}` : '';
+
           return {
             ...d,
             loadBalancerIP,
@@ -162,13 +163,19 @@ export default {
     await this.getGitHubRepos()
     try {
       const allClusters = await this.getClusters();
-      this.servicesByCluster = await this.getServicesByCluster(allClusters);
-      this.ingressesByCluster = await this.getIngressesByCluster(allClusters);
+      const [ingressesByCluster, servicesByCluster] = await Promise.all([
+        this.getIngressesByCluster(allClusters),
+        this.getServicesByCluster(allClusters),
+      ]);
+
+      this.ingressesByCluster = ingressesByCluster;
+      this.servicesByCluster = servicesByCluster;
     } catch (error) {
       console.error('Error fetching clusters', error);
     } finally {
       this.loading = false;
     }
+    
   },
   methods: {
     openSidebar (row) {
@@ -195,73 +202,83 @@ export default {
       });
     },
     async getServicesByCluster(allClusters) {
-      return await Promise.all(
-        allClusters
-          .filter((cluster) => {
-            return cluster.isReady
-          })
-          .map(async (cluster) => {
-            const clusterData = {
-              name: cluster.spec.displayName,
-              id: cluster.id,
-              services: [],
-              loading: true,
-              error: false,
-            };
-            try {
-              const services = (
-                await this.$store.dispatch('cluster/request', {
-                  url: `/k8s/clusters/${cluster.id}/v1/services`,
-                })
-              ).data;
-              clusterData.services = services.filter((service) => service.spec?.type === 'LoadBalancer' && service.metadata?.annotations?.['kube-vip.io/loadbalancerIPs']).map((service) => ({
+      const servicePromises = allClusters
+        .filter(cluster => cluster.isReady)
+        .map(async cluster => {
+          const clusterData = {
+            name: cluster.spec.displayName,
+            id: cluster.id,
+            services: [],
+            loading: true,
+            error: false,
+          };
+
+          try {
+            const services = (
+              await this.$store.dispatch('cluster/request', {
+                url: `/k8s/clusters/${cluster.id}/v1/services`,
+              })
+            ).data;
+
+            clusterData.services = services
+              .filter(service => 
+                service.spec?.type === 'LoadBalancer' &&
+                service.metadata?.annotations?.['kube-vip.io/loadbalancerIPs']
+              )
+              .map(service => ({
                 ...service,
                 clusterId: cluster.id,
                 clusterName: cluster.spec.displayName,
               }));
-            } catch (error) {
-              console.error(`Error fetching services for cluster ${cluster.id}:`, error);
-              clusterData.error = true;
-            } finally {
-              clusterData.loading = false;
-            }
-            return clusterData;
-          })
-      );
+          } catch (error) {
+            console.error(`Error fetching services for cluster ${cluster.id}:`, error);
+            clusterData.error = true;
+          } finally {
+            clusterData.loading = false;
+          }
+
+          return clusterData;
+        });
+
+      return await Promise.all(servicePromises);
     },
+
     async getIngressesByCluster(allClusters) {
-      return Promise.all(
-        allClusters
-          .filter((cluster) => cluster.isReady)
-          .map(async (cluster) => {
-            const clusterData = {
-              name: cluster.spec.displayName,
-              id: cluster.id,
-              ingresses: [],
-              loading: true,
-              error: false,
-            };
-            try {
-              const ingresses = (
-                await this.$store.dispatch('cluster/request', {
-                  url: `/k8s/clusters/${cluster.id}/v1/networking.k8s.io.ingresses`,
-                })
-              ).data;
-              clusterData.ingresses = ingresses.map((ingress) => ({
-                ...ingress,
-                clusterId: cluster.id,
-                clusterName: cluster.spec.displayName,
-                nodeIP: ingress.status?.loadBalancer?.ingress?.map((node) => node.ip) || []
-              }));
-            } catch (error) {
-              console.error(`Error fetching ingresses for cluster ${cluster.id}:`, error);
-              clusterData.error = true;
-            } finally {
-              clusterData.loading = false;
-            }
-            return clusterData;
-          })
-      );
+      const ingressPromises = allClusters
+        .filter(cluster => cluster.isReady)
+        .map(async cluster => {
+          const clusterData = {
+            name: cluster.spec.displayName,
+            id: cluster.id,
+            ingresses: [],
+            loading: true,
+            error: false,
+          };
+
+          try {
+            const ingresses = (
+              await this.$store.dispatch('cluster/request', {
+                url: `/k8s/clusters/${cluster.id}/v1/networking.k8s.io.ingresses`,
+              })
+            ).data;
+
+            clusterData.ingresses = ingresses.map(ingress => ({
+              ...ingress,
+              clusterId: cluster.id,
+              clusterName: cluster.spec.displayName,
+              nodeIP: ingress.status?.loadBalancer?.ingress?.map(node => node.ip) || [],
+            }));
+          } catch (error) {
+            console.error(`Error fetching ingresses for cluster ${cluster.id}:`, error);
+            clusterData.error = true;
+          } finally {
+            clusterData.loading = false;
+          }
+
+          return clusterData;
+        });
+
+      return await Promise.all(ingressPromises);
     },
     getEndpoints(row) {
       return (
