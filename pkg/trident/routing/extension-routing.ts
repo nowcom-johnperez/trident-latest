@@ -1,6 +1,6 @@
 // Don't forget to create a VueJS page called index.vue in the /pages folder!!!
 import TridentPage from '../pages/TridentPage.vue';
-import WikiPage from '../pages/WikiPage.vue';
+import WikiPage from '../pages/Wiki2Page.vue';
 import WishPage from '../pages/WishPage.vue';
 import DevToolsPage from '../pages/DevToolsPage.vue';
 import HomePage from '../pages/HomePage.vue';
