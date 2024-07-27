@@ -11,6 +11,7 @@
     "@types/lodash": "4.14.184",
     "core-js": "3.21.1",
     "css-loader": "6.7.3",
+    "github-markdown-css": "^5.6.1",
     "marked": "4.0.12"
   },
   "resolutions": {

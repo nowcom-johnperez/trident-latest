@@ -23,7 +23,7 @@
       ],
       "@shell/*": [
         "./node_modules/@rancher/shell/*"
-      ]
+      ],
     },
     "typeRoots": [
       "./node_modules",

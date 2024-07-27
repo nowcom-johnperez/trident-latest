@@ -1,19 +1,13 @@
 <template>
   <div>
-    <!-- <div class="wiki-header">
-      <h1>Wiki List</h1>
-      <ul>
-        <li v-for="item in list">
-          <a href="#" @click.prevent="getWikiData(item.slug)">{{ item.title }}</a>
-        </li>
-      </ul>
-    </div> -->
+    <TopNav />
 
-    <div ref="wikiContent" v-html="wikiContent"></div>
+    <div class="markdown-body" ref="wikiContent" v-html="wikiContent"></div>
   </div>
 </template>
 
 <script>
+import 'github-markdown-css';
 import { marked } from 'marked'
 import { wikiService } from '../services/api/wiki'
 import { getConfig } from "../config/api";
@@ -37,9 +31,17 @@ export default {
       });
     },
     async getWikiData(wikiId) {
-      const res = await wikiService.getById(wikiId);
-      const content = this.prependBaseUrlToUploads(res.content, GITLAB_SOURCE_URL);
-      this.wikiContent = marked(content)
+      try {
+        const res = await wikiService.getById(wikiId);
+        const content = this.prependBaseUrlToUploads(res.content, GITLAB_SOURCE_URL);
+        this.wikiContent = marked(content)
+      } catch (err) {
+        this.$store.dispatch('growl/error', {
+          title: 'Error',
+          message: `Error fetching wiki ${wikiId}`,
+        }, { root: true })
+      }
+
       this.$nextTick(() => this.setupLinkHandlers());
     },
     setupLinkHandlers() {
@@ -71,9 +73,7 @@ export default {
 }
 </script>
 
-<!-- @TODO FIX CSS for markdown -->
-<style lang="scss" scoped>
-H1, H2, H3, H4, H5 {
-  border-bottom: 1px solid #bfbfc3 !important;
-}
+<style scoped>
+@import '../../../node_modules/github-markdown-css/github-markdown.css';
+/* @import '@github/github-markdown.css'; */
 </style>
