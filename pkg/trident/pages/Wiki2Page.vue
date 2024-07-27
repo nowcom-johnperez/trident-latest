@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TopNav />
+    <TopNav :breadcrumbs="breadcrumbs" @onBCclick="handleBreadCrumbClick" />
 
     <div class="markdown-body" ref="wikiContent" v-html="wikiContent"></div>
   </div>
@@ -12,13 +12,18 @@ import { marked } from 'marked'
 import { wikiService } from '../services/api/wiki'
 import { getConfig } from "../config/api";
 const { GITLAB_SOURCE_URL } = getConfig();
+import TopNav from '../components/navbar/TopNav.vue';
 export default {
   name: 'Wiki',
   layout: 'plain',
+  components: {
+    TopNav
+  },
   data() {
     return {
       wikiContent: null,
-      list: []
+      list: [],
+      breadcrumbs: []
     }
   },
   methods: {
@@ -34,6 +39,10 @@ export default {
       try {
         const res = await wikiService.getById(wikiId);
         const content = this.prependBaseUrlToUploads(res.content, GITLAB_SOURCE_URL);
+        this.breadcrumbs.push({
+          id: wikiId,
+          title: res.title
+        })
         this.wikiContent = marked(content)
       } catch (err) {
         this.$store.dispatch('growl/error', {
@@ -43,6 +52,10 @@ export default {
       }
 
       this.$nextTick(() => this.setupLinkHandlers());
+    },
+    handleBreadCrumbClick(data) {
+      this.breadcrumbs = this.breadcrumbs.slice(0, data.index);
+      this.getWikiData(data.id)
     },
     setupLinkHandlers() {
       const container = this.$refs.wikiContent;
