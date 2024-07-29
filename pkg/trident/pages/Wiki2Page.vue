@@ -2,7 +2,7 @@
   <div>
     <TopNav :breadcrumbs="breadcrumbs" @onBCclick="handleBreadCrumbClick" />
 
-    <div class="markdown-body" ref="wikiContent" v-html="wikiContent"></div>
+    <div class="markdown-body mb-30" ref="wikiContent" v-html="wikiContent"></div>
   </div>
 </template>
 

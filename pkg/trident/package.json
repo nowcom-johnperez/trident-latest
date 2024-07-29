@@ -1,7 +1,7 @@
 {
   "name": "trident",
   "description": "Trident simplifies setup and management of Kubernetes clusters, enabling each team to quickly and effortlessly create their own testing environments.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": false,
   "rancher": {
     "annotations": {

@@ -1,74 +1,78 @@
 <template>
-  <Loading v-if="loading" label="Loading data... Please wait..." />
-  <div v-else>
-    <h1>App Launcher</h1>
+  <div>
+    <TopNav />
+    <Loading v-if="loading" label="Loading data... Please wait..." />
+    <div v-else>
+      <div class="mt-30 pb-20">
+        <SortableTable
+          :headers="main.headers" 
+          :rows="displayedClusterData" 
+          :paging="true" 
+          :rowActionsWidth="5" 
+          :rows-per-page="main.rowsPerPage" 
+          keyField="metadata.uid" 
+          :loading="main.loading"
+          :table-actions="false"
+          :row-actions="false"
+        >
+          <template #header-left>
+            <h1>App Launcher</h1>
+          </template>
+          <template #cell:metadata.name="{row}">
+            <a href="#" @click.prevent="openSidebar(row)">{{ row.metadata.name }}</a>
+            <p>{{ getIngressPath(row) }}</p>
+          </template>
+          <template #cell:clusterName="{row}">
+            <UrlLink :url="{ path: `/c/${row.clusterId}/explorer#cluster-events`}">{{ row.clusterName }}</UrlLink>
+          </template>
+          <template #cell:nodeIP="{row}">
+            <ul class="ip-listing">
+              <li v-for="ip in row.nodeIP.slice(0, 3)" :key="`${ip}-${row.metadata.namespace}`">
+                <CopyToClipboardText :text="ip" />
+              </li>
+            </ul>
+          </template>
+          <template #cell:loadBalancerIP="{row}">
+            <ul class="ip-listing">
+              <li v-for="ip in row.loadBalancerIP" :key="`${ip}-${row.metadata.namespace}`">
+                <CopyToClipboardText :text="ip" />
+              </li>
+            </ul>
+          </template>
+          <template #cell:repoBranch="{row}">
+            <GithubLink v-if="row.repoBranch" :value="row.repoBranch" />
+          </template>
+          <template #cell:actions="{ row }">
+            <div style="display: flex; justify-content: flex-start;">
+              <a
+                v-if="getEndpoints(row)?.length <= 1 && row.kind === 'Service'"
+                :href="getEndpoints(row)[0]?.value" target="_blank"
+                rel="noopener noreferrer nofollow" class="btn role-primary">
+                {{ t('appLauncher.launch') }}
+              </a>
+              <a
+                v-else-if="row.kind === 'Ingress'"
+                :href="getIngressPath(row)"
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+                class="btn role-primary"
+              >
+                {{ t('appLauncher.launch') }}
+              </a>
+              <ButtonDropDown
+                v-else
+                :button-label="t('appLauncher.launch')"
+                :dropdown-options="getEndpoints(row)"
+                :title="t('appLauncher.launchAnEndpointFromSelection')" @click-action="openLink"
+              />
+            </div>
+          </template>
+        </SortableTable>
 
-    <div class="mt-10 pb-20">
-      <SortableTable
-        :headers="main.headers" 
-        :rows="displayedClusterData" 
-        :paging="true" 
-        :rowActionsWidth="5" 
-        :rows-per-page="main.rowsPerPage" 
-        keyField="metadata.uid" 
-        :loading="main.loading"
-        :table-actions="false"
-        :row-actions="false"
-      >
-        <template #cell:metadata.name="{row}">
-          <a href="#" @click.prevent="openSidebar(row)">{{ row.metadata.name }}</a>
-          <p>{{ getIngressPath(row) }}</p>
-        </template>
-        <template #cell:clusterName="{row}">
-          <UrlLink :url="{ path: `/c/${row.clusterId}/explorer#cluster-events`}">{{ row.clusterName }}</UrlLink>
-        </template>
-        <template #cell:nodeIP="{row}">
-          <ul class="ip-listing">
-            <li v-for="ip in row.nodeIP.slice(0, 3)" :key="`${ip}-${row.metadata.namespace}`">
-              <CopyToClipboardText :text="ip" />
-            </li>
-          </ul>
-        </template>
-        <template #cell:loadBalancerIP="{row}">
-          <ul class="ip-listing">
-            <li v-for="ip in row.loadBalancerIP" :key="`${ip}-${row.metadata.namespace}`">
-              <CopyToClipboardText :text="ip" />
-            </li>
-          </ul>
-        </template>
-        <template #cell:repoBranch="{row}">
-          <GithubLink v-if="row.repoBranch" :value="row.repoBranch" />
-        </template>
-        <template #cell:actions="{ row }">
-          <div style="display: flex; justify-content: flex-start;">
-            <a
-              v-if="getEndpoints(row)?.length <= 1 && row.kind === 'Service'"
-              :href="getEndpoints(row)[0]?.value" target="_blank"
-              rel="noopener noreferrer nofollow" class="btn role-primary">
-              {{ t('appLauncher.launch') }}
-            </a>
-            <a
-              v-else-if="row.kind === 'Ingress'"
-              :href="getIngressPath(row)"
-              target="_blank"
-              rel="noopener noreferrer nofollow"
-              class="btn role-primary"
-            >
-              {{ t('appLauncher.launch') }}
-            </a>
-            <ButtonDropDown
-              v-else
-              :button-label="t('appLauncher.launch')"
-              :dropdown-options="getEndpoints(row)"
-              :title="t('appLauncher.launchAnEndpointFromSelection')" @click-action="openLink"
-            />
-          </div>
-        </template>
-      </SortableTable>
-
-      <SideBar type="main" :sidebar-visible="main.sidebar.show" @close="closeSidebar">
-        <Overview v-if="selectedRow" :detail="selectedRow" />
-      </SideBar>
+        <SideBar type="main" :sidebar-visible="main.sidebar.show" @close="closeSidebar">
+          <Overview v-if="selectedRow" :detail="selectedRow" />
+        </SideBar>
+      </div>
     </div>
   </div>
 </template>
@@ -88,11 +92,13 @@ import { hasAccess } from '../utils/permission'
 import ButtonDropDown from '@shell/components/ButtonDropdown';
 import { isMaybeSecure } from '@shell/utils/url';
 import { ingressFullPath } from '@shell/models/networking.k8s.io.ingress';
+import TopNav from '../components/navbar/TopNav.vue';
 export default {
   name: 'Trident',
   mixins: [routeInit],
   layout: 'plain',
   components: {
+    TopNav,
     SortableTable,
     SideBar,
     Overview,
