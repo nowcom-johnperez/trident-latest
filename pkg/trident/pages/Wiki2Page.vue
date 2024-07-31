@@ -69,13 +69,15 @@ export default {
         event.preventDefault();
         const url = new URL(target.href);
         const path = url.pathname;
-        console.log(`url`, url, path)
 
-        // Assuming the path is a relative URL and you want to handle it
         if (path.startsWith('/')) {
-          // Extract the slug or ID from the URL
-          const wikiId = path.substring(13); // Adjust extraction logic if needed
-          this.getWikiData(wikiId);
+          const splitPath = path.split('/');
+          const cIndex = splitPath.indexOf('c');
+          const underscoreIndex = splitPath.indexOf('_');
+          if (cIndex !== -1 && underscoreIndex !== -1 && underscoreIndex > cIndex) {
+            const wikiPath = splitPath.slice(underscoreIndex + 1).join('/');
+            this.getWikiData(wikiPath);
+          }
         }
       }
     }
