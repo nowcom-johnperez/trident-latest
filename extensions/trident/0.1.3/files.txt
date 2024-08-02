@@ -3,7 +3,6 @@ plugin/fonts/fontawesome-webfont.af7ae505.woff2
 plugin/fonts/fontawesome-webfont.b06871f2.ttf
 plugin/fonts/fontawesome-webfont.fee66e71.woff
 plugin/img/fontawesome-webfont.912ec66d.svg
-plugin/img/nowcom.76f13062.jpeg
 plugin/package.json
 plugin/trident-0.1.3.umd.min.1.js
 plugin/trident-0.1.3.umd.min.1.js.map

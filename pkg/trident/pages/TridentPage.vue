@@ -1,7 +1,9 @@
 <template>
   <div>
     <TopNav />
-    <Loading v-if="loading" label="Loading data... Please wait..." />
+    <div v-if="loading" class="loader">
+      <i class="fa fa-spinner fa-spin"></i> Loading Data Please Wait...
+    </div>
     <div v-else>
       <div class="mt-30 pb-20">
         <SortableTable
@@ -311,37 +313,16 @@ export default {
   },
   created() {
     this.main.headers = TRIDENT_TABLE_HEADERS
-    // this.main.rows = [
-    //   {
-    //     title: 'DC-DEV2-ATOM-01',
-    //     description: 'Atom Dev2 Cluster 01',
-    //     ip: '10.55.11.79',
-    //     healthCheck: null,
-    //     repoBranch: null,
-    //     rancher: null
-    //   },
-    //   {
-    //     title: 'DC-DEV2-MOBILE-01',
-    //     description: 'Mobile Dev2 Cluster 01',
-    //     ip: '10.55.11.89',
-    //     healthCheck: null,
-    //     repoBranch: null,
-    //     rancher: null
-    //   },
-    //   {
-    //     title: 'DC-DEV2-RND-01',
-    //     description: 'RND Dev2 Cluster 01',
-    //     ip: '10.55.11.91',
-    //     healthCheck: null,
-    //     repoBranch: null,
-    //     rancher: null
-    //   }
-    // ]
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.loader {
+  text-align: center;
+  font-size: 2em;
+  margin-top: 10%;
+}
 ul.ip-listing {
   list-style-type: none;
   padding: 0;

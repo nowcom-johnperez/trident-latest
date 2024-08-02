@@ -3,7 +3,8 @@
     <nav class="top-navbar">
         <div class="navbar-container">
             <div class="logo">
-              <img src="../../assets/img/nowcom.jpeg" width="150px" alt="">
+              <!-- <img src="../../assets/img/nowcom.jpeg" width="150px" alt=""> -->
+               Trident
             </div>
             <div class="nav-links">
                 <router-link v-for="link in links" :to="link.route">{{ link.name }}</router-link>
@@ -91,7 +92,7 @@ export default {
 }
 
 .nav-links a:hover {
-    color: #0073e6;
+    color: #297db4;
 }
 
 .nav-links a::after {
@@ -99,7 +100,7 @@ export default {
     position: absolute;
     width: 0;
     height: 2px;
-    background: #0073e6;
+    background: #297db4;
     left: 50%;
     bottom: -6px;
     transition: 0.3s;
@@ -108,6 +109,10 @@ export default {
 .nav-links a:hover::after {
     width: 100%;
     left: 0;
+}
+
+.nav-links .router-link-exact-active {
+  color: #297db4;
 }
 
 .breadcrumbs {
@@ -119,11 +124,34 @@ export default {
 }
 
 .breadcrumbs a {
-    color: #0073e6;
+    color: #297db4;
     text-decoration: none;
 }
 
 .breadcrumbs a:hover {
     text-decoration: underline;
+}
+
+.theme-dark {
+  .logo {
+      color: #ffffff;
+  }
+
+  .nav-links a {
+      color: #ffffff;
+  }
+
+  .nav-links a:hover {
+      color: #297db4;
+  }
+
+  .nav-links .router-link-exact-active {
+    color: #297db4;
+  }
+
+  .breadcrumbs a {
+      color: #ffffff;
+      text-decoration: none;
+  }
 }
 </style>
