@@ -11,9 +11,9 @@ import 'github-markdown-css';
 import { marked } from 'marked'
 import { wikiService } from '../services/api/wiki'
 import { getConfig } from "../config/api";
-const { GITLAB_SOURCE_URL, GITLAB_TOKEN } = getConfig();
+const { GITLAB_SOURCE_URL } = getConfig();
+import { gitlabProxyService } from '../services/api/gitlab-proxy'
 import TopNav from '../components/navbar/TopNav.vue';
-const fs = require('fs');
 export default {
   name: 'Wiki',
   layout: 'plain',
@@ -28,47 +28,15 @@ export default {
     }
   },
   methods: {
-    async prependBaseUrlToUploads(markdownContent, baseUrl) {
-    const pathPattern = /(\.\.\/)?(uploads\/|images\/)[^\s)]+/g;
+    prependBaseUrlToUploads(markdownContent, baseUrl) {
+      const pathPattern = /(\.\.\/)?(uploads\/|images\/)[^\s)]+/g;
 
-    const matches = markdownContent.match(pathPattern);
-    if (!matches) return markdownContent;
-
-    const base64Promises = matches.map(async match => {
-      const normalizedMatch = match.replace(/\.\.\//, '');
-      const fullUrl = `${baseUrl.replace(/\/+$/, '')}/${normalizedMatch}`;
-      const base64Image = await this.fetchImageAsBase64(fullUrl);
-      return { match, base64Image };
-    });
-
-    const base64Images = await Promise.all(base64Promises);
-
-    base64Images.forEach(({ match, base64Image }) => {
-      markdownContent = markdownContent.replace(match, base64Image);
-    });
-
-    return markdownContent;
-  },
-  async fetchImageAsBase64(url) {
-    const response = await fetch(url);
-    const blob = await response.blob();
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(blob);
-    });
-  },
-    // prependBaseUrlToUploads(markdownContent, baseUrl) {
-    //   const pathPattern = /(\.\.\/)?(uploads\/|images\/)[^\s)]+/g;
-
-    //   return markdownContent.replace(pathPattern, match => {
-    //     const normalizedMatch = match.replace(/\.\.\//, '');
-    //     const fullUrl = `${baseUrl.replace(/\/+$/, '')}/${normalizedMatch}?private_token=${GITLAB_TOKEN}`;
-    //     console.log(`Generated URL: ${fullUrl}`);  
-    //     return fullUrl
-    //   });
-    // },
+      return markdownContent.replace(pathPattern, match => {
+        const normalizedMatch = match.replace(/\.\.\//, '');
+        const fullUrl = `${baseUrl.replace(/\/+$/, '')}/${normalizedMatch}`;
+        return fullUrl
+      });
+    },
     async getWikiData(wikiId) {
       try {
         const res = await wikiService.getById(wikiId);
