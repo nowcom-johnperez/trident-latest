@@ -12,7 +12,6 @@ import { marked } from 'marked'
 import { wikiService } from '../services/api/wiki'
 import { getConfig } from "../config/api";
 const { GITLAB_SOURCE_URL } = getConfig();
-import { gitlabProxyService } from '../services/api/gitlab-proxy'
 import TopNav from '../components/navbar/TopNav.vue';
 export default {
   name: 'Wiki',
@@ -28,14 +27,56 @@ export default {
     }
   },
   methods: {
-    prependBaseUrlToUploads(markdownContent, baseUrl) {
+    // prependBaseUrlToUploads(markdownContent, baseUrl) {
+    //   const pathPattern = /(\.\.\/)?(uploads\/|images\/)[^\s)]+/g;
+
+    //   return markdownContent.replace(pathPattern, match => {
+    //     const normalizedMatch = match.replace(/\.\.\//, '');
+    //     const fullUrl = `${baseUrl.replace(/\/+$/, '')}/${normalizedMatch}`;
+    //     return fullUrl
+    //   });
+    // },
+    async prependBaseUrlToUploads(markdownContent, baseUrl) {
       const pathPattern = /(\.\.\/)?(uploads\/|images\/)[^\s)]+/g;
 
-      return markdownContent.replace(pathPattern, match => {
+      // Use Promise.all to handle multiple async fetches in parallel
+      const matches = markdownContent.match(pathPattern) || [];
+      const fetchPromises = matches.map(async (match) => {
         const normalizedMatch = match.replace(/\.\.\//, '');
-        const fullUrl = `${baseUrl.replace(/\/+$/, '')}/${normalizedMatch}`;
-        return fullUrl
+        
+        // Fetch the base64 image content
+        const base64ImageContent = await this.fetchImage(normalizedMatch);
+        
+        // Create a base64 data URL
+        const mimeType = this.getMimeType(normalizedMatch);
+        const dataUrl = `data:${mimeType};base64,${base64ImageContent}`;
+        
+        return { match, dataUrl };
       });
+
+      const results = await Promise.all(fetchPromises);
+
+      // Replace the matches with their corresponding data URLs
+      let updatedMarkdownContent = markdownContent;
+      results.forEach(({ match, dataUrl }) => {
+        updatedMarkdownContent = updatedMarkdownContent.replace(match, dataUrl);
+      });
+
+      return updatedMarkdownContent;
+    },
+    getMimeType (filePath) {
+      const extension = filePath.split('.').pop().toLowerCase();
+      switch (extension) {
+        case 'png':
+          return 'image/png';
+        case 'jpg':
+        case 'jpeg':
+          return 'image/jpeg';
+        case 'gif':
+          return 'image/gif';
+        default:
+          return 'application/octet-stream'; // Default MIME type for unknown types
+      }
     },
     async getWikiData(wikiId) {
       try {
@@ -54,6 +95,19 @@ export default {
       }
 
       this.$nextTick(() => this.setupLinkHandlers());
+    },
+    async fetchImage(imageUrl) {
+      try {
+        const res = await wikiService.getImage(imageUrl);
+        return res.content;
+      } catch (error) {
+        console.error('Error fetching image:', error);
+        return '';
+      }
+    },
+    async fetchFiles() {
+      const res = await wikiService.fetchAllFiles()
+      console.log(`res`, res.data)
     },
     handleBreadCrumbClick(data) {
       this.breadcrumbs = this.breadcrumbs.slice(0, data.index);
@@ -86,6 +140,8 @@ export default {
   },
   mounted() {
     this.getWikiData('home')
+    // this.fetchFiles()
+    this.fetchImage(`uploads/clus.png`)
   }
 }
 </script>
