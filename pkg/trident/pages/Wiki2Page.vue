@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TopNav :breadcrumbs="breadcrumbs" @onBCclick="handleBreadCrumbClick" />
+    <TopNav />
 
     <div id="wiki-container" class="container">
       <div class="markdown-body mt-10" ref="wikiContent" v-html="wikiContent"></div>
@@ -41,7 +41,6 @@ export default {
       wikiList: [],
       wikiContent: null,
       list: [],
-      breadcrumbs: []
     }
   },
   methods: {
@@ -83,17 +82,12 @@ export default {
       }
     },
     async clickOnSideBar(wikiId) {
-      this.breadcrumbs = []
       await this.getWikiData(wikiId)
     },
     async getWikiData(wikiId) {
       try {
         const res = await wikiService.getById(wikiId);
         const content = await this.prependBaseUrlToUploads(res.content, GITLAB_SOURCE_URL);
-        this.breadcrumbs.push({
-          id: wikiId,
-          title: formatString(res.title)
-        });
         this.wikiContent = marked(content);
       } catch (err) {
         this.$store.dispatch('growl/error', {
@@ -117,11 +111,6 @@ export default {
         console.error('Error fetching image:', error);
         return '';
       }
-    },
-    handleBreadCrumbClick(data) {
-      this.$router.replace({ path: this.$route.path, hash: `#${encodeURIComponent(data.id)}`});
-      this.breadcrumbs = this.breadcrumbs.slice(0, data.index);
-      this.getWikiData(data.id);
     },
     setupLinkHandlers() {
       const container = this.$refs.wikiContent;

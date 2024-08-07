@@ -11,12 +11,6 @@
             </div>
         </div>
     </nav>
-    <div v-if="$route.name.includes(WIKI_PAGE_NAME)" class="breadcrumbs">
-        <a v-for="(bc, index) in breadcrumbs" href="#" @click.prevent="onBCclick(bc?.id, index)">
-          {{ bc?.title }}
-          <span v-if="index !== (breadcrumbs.length - 1)"> &gt; </span>
-        </a> 
-    </div>
   </div>
 </template>
 
@@ -65,6 +59,8 @@ export default {
     // position: fixed;
     width: 90%;
     z-index: 1000;
+    padding-bottom: 20px;
+    // border-bottom: 1px solid #e0e0e0;
 }
 
 .navbar-container {
@@ -115,23 +111,6 @@ export default {
   color: #297db4;
 }
 
-.breadcrumbs {
-    margin-top: 10px; /* Adjust according to the height of the navbar */
-    padding: 15px 20px;
-    // background-color: #f9f9f9;
-    border-bottom: 1px solid #e0e0e0;
-    font-size: 14px;
-}
-
-.breadcrumbs a {
-    color: #297db4;
-    text-decoration: none;
-}
-
-.breadcrumbs a:hover {
-    text-decoration: underline;
-}
-
 .theme-dark {
   .logo {
       color: #ffffff;
@@ -147,11 +126,6 @@ export default {
 
   .nav-links .router-link-exact-active {
     color: #297db4;
-  }
-
-  .breadcrumbs a {
-      color: #ffffff;
-      text-decoration: none;
   }
 }
 </style>
