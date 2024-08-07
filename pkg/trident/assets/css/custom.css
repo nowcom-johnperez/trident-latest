@@ -389,6 +389,14 @@ background-color: #4caf50;
   cursor: pointer;
 }
 
+.theme-dark .markdown-body img {
+  background-color: #1b1c21 !important;
+}
+
+.theme-light .markdown-body img {
+  background-color: #fff !important;
+}
+
 /* pagination (always make sure this is at the bottom) */
 .smart-pagination {
   text-align: center;
