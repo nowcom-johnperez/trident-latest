@@ -25,6 +25,3 @@ Release v0.1.2
 Release v0.1.3
 - Implement Gitlab Wiki
 - Bug fixes
-
-Release v0.1.4
-- Update compliance to Rancher 2.9

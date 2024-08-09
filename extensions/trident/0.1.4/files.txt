@@ -1,0 +1,12 @@
+plugin/fonts/fontawesome-webfont.674f50d2.eot
+plugin/fonts/fontawesome-webfont.af7ae505.woff2
+plugin/fonts/fontawesome-webfont.b06871f2.ttf
+plugin/fonts/fontawesome-webfont.fee66e71.woff
+plugin/img/fontawesome-webfont.912ec66d.svg
+plugin/package.json
+plugin/trident-0.1.4.umd.min.1.js
+plugin/trident-0.1.4.umd.min.1.js.map
+plugin/trident-0.1.4.umd.min.2.js
+plugin/trident-0.1.4.umd.min.2.js.map
+plugin/trident-0.1.4.umd.min.js
+plugin/trident-0.1.4.umd.min.js.map
