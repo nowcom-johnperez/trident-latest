@@ -98,7 +98,7 @@ import TopNav from '../components/navbar/TopNav.vue';
 export default {
   name: 'Trident',
   mixins: [routeInit],
-  layout: 'plain',
+  // layout: 'plain',
   components: {
     TopNav,
     SortableTable,
@@ -200,7 +200,7 @@ export default {
       this.githubList = allGithubRepos.map((g) => {
         return {
           ...g,
-          clusterName: g.spec.targets.map((target) => target.clusterName)[0]
+          clusterName: g.spec.targets?.map((target) => target.clusterName)[0]
         }
       })
     },

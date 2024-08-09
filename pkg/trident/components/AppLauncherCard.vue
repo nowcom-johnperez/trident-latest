@@ -79,7 +79,7 @@ export default {
     }
   },
   name: 'AppLauncherCard',
-  layout: 'plain',
+  // layout: 'plain',
 };
 </script>
 

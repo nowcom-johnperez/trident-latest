@@ -68,7 +68,7 @@ import Modal from '../components/common/Modal.vue';
 import WishForm from '../components/forms/wish-form.vue';
 export default {
   name: 'HomePage',
-  layout: 'plain',
+  // layout: 'plain',
   mixins: [routeInit],
   components: {
     K8STable,

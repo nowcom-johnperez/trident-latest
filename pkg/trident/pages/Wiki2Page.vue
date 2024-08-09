@@ -32,7 +32,7 @@ import TopNav from '../components/navbar/TopNav.vue';
 
 export default {
   name: 'Wiki',
-  layout: 'plain',
+  // layout: 'plain',
   components: {
     TopNav
   },

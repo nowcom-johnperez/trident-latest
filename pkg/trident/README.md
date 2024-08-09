@@ -24,3 +24,4 @@ Release v0.1.2
 
 Release v0.1.3
 - Implement Gitlab Wiki
+- Bug fixes
