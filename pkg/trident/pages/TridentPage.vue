@@ -114,7 +114,6 @@ export default {
   },
   data() {
     return {
-      domain: null,
       servicesByCluster: [],
       ingressesByCluster: [],
       githubList: [],
@@ -231,7 +230,7 @@ export default {
         this.favoritedGithubLink.splice(index, 1, { ...item });
       }
 
-      localStorage.setItem(`favoritedGithubLink-${this.domain}`, JSON.stringify(this.favoritedGithubLink));
+      localStorage.setItem('favoritedGithubLink', JSON.stringify(this.favoritedGithubLink));
     },
     async getClusters() {
       return await this.$store.dispatch(`management/findAll`, {
@@ -341,9 +340,8 @@ export default {
     },
   },
   created() {
-    this.domain = window.location.origin
     this.main.headers = TRIDENT_TABLE_HEADERS
-    const storedFavorites = localStorage.getItem(`favoritedGithubLink-${this.domain}`);
+    const storedFavorites = localStorage.getItem('favoritedGithubLink');
     if (storedFavorites) {
       this.favoritedGithubLink.push(...JSON.parse(storedFavorites));
     }
