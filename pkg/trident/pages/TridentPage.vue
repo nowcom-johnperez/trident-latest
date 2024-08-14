@@ -42,7 +42,8 @@
             </ul>
           </template>
           <template #cell:repoBranch="{row}">
-            <GithubLink v-if="row.repoBranch" :value="row.repoBranch" />
+            <GithubLink v-if="row.repoBranch?.length <= 1" :value="row.repoBranch[0]" />
+            <GithubDropdown v-if="row.repoBranch?.length > 1" :value="row.repoBranch" :github="row.github" :favorites="favoritedGithubLink" @set-favorite="setFavorite" />
           </template>
           <template #cell:actions="{ row }">
             <div style="display: flex; justify-content: flex-start;">
@@ -86,6 +87,7 @@ import CopyToClipboardText from '@shell/components/CopyToClipboardText.vue'
 import SortableTable from '@shell/components/ResourceTable.vue'
 import SideBar from '../components/common/SideBar.vue'
 import GithubLink from '../components/common/GithubLink.vue'
+import GithubDropdown from '../components/common/GithubDropdown.vue'
 import UrlLink from '../components/common/UrlLink.vue'
 import Overview from '../components/trident/Overview.vue'
 import { TRIDENT_TABLE_HEADERS } from '../config/tables'
@@ -98,7 +100,6 @@ import TopNav from '../components/navbar/TopNav.vue';
 export default {
   name: 'Trident',
   mixins: [routeInit],
-  // layout: 'plain',
   components: {
     TopNav,
     SortableTable,
@@ -107,14 +108,17 @@ export default {
     CopyToClipboardText,
     ButtonDropDown,
     GithubLink,
+    GithubDropdown,
     UrlLink,
-    Loading
+    Loading,
   },
   data() {
     return {
+      domain: null,
       servicesByCluster: [],
       ingressesByCluster: [],
       githubList: [],
+      favoritedGithubLink: [],
       loading: true,
       main: {
         headers: [],
@@ -152,14 +156,23 @@ export default {
           const nameB = b.metadata.name.toLowerCase();
           nameB.localeCompare(nameA);
         }).map((d) => {
-          const github = this.githubList.find((gh) => gh.clusterName === d.clusterName)
-          const githubUrl = github?.spec?.repo && github?.spec?.paths?.length ? `${github.spec.repo.replace('.git', '')}/tree/${github.spec.branch}${github.spec.paths[0]}` : '';
-
+          const githubList = this.githubList.filter((gh) => gh.clusterName === d.clusterName)
+          const githubItems = {
+            id: d.metadata?.uid,
+            namespace: d.metadata?.namespace,
+            name: d.metadata?.name,
+            list: githubList,
+            urls: []
+          }
+          for (const github of githubList) {
+            const githubUrl = github?.spec?.repo && github?.spec?.paths?.length ? `${github.spec.repo.replace('.git', '')}/tree/${github.spec.branch}${github.spec.paths[0]}` : '';
+            githubItems.urls.push(githubUrl)
+          }
           return {
             ...d,
             loadBalancerIP,
-            repoBranch: githubUrl,
-            github
+            repoBranch: githubItems.urls,
+            github: githubItems
           }
         });
 
@@ -203,6 +216,22 @@ export default {
           clusterName: g.spec.targets?.map((target) => target.clusterName)[0]
         }
       })
+    },
+    setFavorite(item) {
+      const index = this.favoritedGithubLink.findIndex(
+        (favoritedLink) =>
+          favoritedLink.id === item.id
+      );
+      
+      if (index === -1) {
+        this.favoritedGithubLink.push({
+          ...item
+        });
+      } else {
+        this.favoritedGithubLink.splice(index, 1, { ...item });
+      }
+
+      localStorage.setItem(`favoritedGithubLink-${this.domain}`, JSON.stringify(this.favoritedGithubLink));
     },
     async getClusters() {
       return await this.$store.dispatch(`management/findAll`, {
@@ -312,7 +341,12 @@ export default {
     },
   },
   created() {
+    this.domain = window.location.origin
     this.main.headers = TRIDENT_TABLE_HEADERS
+    const storedFavorites = localStorage.getItem(`favoritedGithubLink-${this.domain}`);
+    if (storedFavorites) {
+      this.favoritedGithubLink.push(...JSON.parse(storedFavorites));
+    }
   }
 }
 </script>

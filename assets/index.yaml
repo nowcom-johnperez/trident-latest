@@ -13,10 +13,10 @@ entries:
       catalog.cattle.io/ui-component: plugins
     apiVersion: v2
     appVersion: 0.1.4
-    created: "2024-08-10T04:11:16.022044+08:00"
+    created: "2024-08-14T09:27:29.319648+08:00"
     description: Trident simplifies setup and management of Kubernetes clusters, enabling
       each team to quickly and effortlessly create their own testing environments.
-    digest: d52f2ae27e3ab99a8f9b3bb688eec59210fbd0911aa9a2831d3b680b629c7fbc
+    digest: 5deef317fd66865391bd249b5560b820b06fbfc4e34e3a5dc00079fc9e732684
     name: trident
     type: application
     urls:
@@ -34,7 +34,7 @@ entries:
       catalog.cattle.io/ui-component: plugins
     apiVersion: v2
     appVersion: 0.1.3
-    created: "2024-08-10T04:11:16.021889+08:00"
+    created: "2024-08-14T09:27:29.319533+08:00"
     description: Trident simplifies setup and management of Kubernetes clusters, enabling
       each team to quickly and effortlessly create their own testing environments.
     digest: 5daf0d372ed4207f2563f09725e889fbaacdd5deddea699ca3cdad6902ac1db7
@@ -57,7 +57,7 @@ entries:
       catalog.cattle.io/ui-version: '>= 2.7.7-0 < 2.9.0-0'
     apiVersion: v2
     appVersion: 0.1.2
-    created: "2024-08-10T04:11:16.021759+08:00"
+    created: "2024-08-14T09:27:29.319409+08:00"
     description: Trident simplifies setup and management of Kubernetes clusters, enabling
       each team to quickly and effortlessly create their own testing environments.
     digest: c2fa4380c04b5d59327f1297c36e5d93b1d48e0f60c379c604d7bae148705bb3
@@ -80,7 +80,7 @@ entries:
       catalog.cattle.io/ui-version: '>= 2.7.7-0 < 2.9.0-0'
     apiVersion: v2
     appVersion: 0.1.1
-    created: "2024-08-10T04:11:16.021613+08:00"
+    created: "2024-08-14T09:27:29.319275+08:00"
     description: Trident simplifies setup and management of Kubernetes clusters, enabling
       each team to quickly and effortlessly create their own testing environments.
     digest: a27707e1ff564c418772f75e629644b14ff2120ae67374212e1941fe5bf15960
@@ -89,4 +89,4 @@ entries:
     urls:
     - assets/trident/trident-0.1.1.tgz
     version: 0.1.1
-generated: "2024-08-10T04:11:16.021077+08:00"
+generated: "2024-08-14T09:27:29.318793+08:00"
