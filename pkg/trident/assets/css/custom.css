@@ -423,6 +423,12 @@ background-color: #4caf50;
   transition: background-color 0.3s ease;
 }
 
+.loader {
+  text-align: center;
+  font-size: 2em;
+  margin-top: 10%;
+}
+
 /* SVG Icon Styling */
 .page-link svg {
   vertical-align: middle;

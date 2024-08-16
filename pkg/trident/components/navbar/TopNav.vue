@@ -3,7 +3,6 @@
     <nav class="top-navbar">
         <div class="navbar-container">
             <div class="logo">
-              <!-- <img src="../../assets/img/nowcom.jpeg" width="150px" alt=""> -->
                Trident
             </div>
             <div class="nav-links">
@@ -85,10 +84,16 @@ export default {
     margin: 0 15px;
     font-size: 16px;
     position: relative;
+    padding: 10px 15px;
+    transition: all 0.3s ease-in-out;
+    border-radius: 4px;
 }
 
 .nav-links a:hover {
-    color: #297db4;
+    color: #ffffff;
+    background-color: #297db4;
+    font-weight: 600;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .nav-links a::after {
@@ -99,7 +104,7 @@ export default {
     background: #297db4;
     left: 50%;
     bottom: -6px;
-    transition: 0.3s;
+    transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
 }
 
 .nav-links a:hover::after {
@@ -108,24 +113,35 @@ export default {
 }
 
 .nav-links .router-link-exact-active {
-  color: #297db4;
+    color: #297db4;
+    font-weight: 700;
+    border-bottom: 3px solid #297db4;
 }
 
 .theme-dark {
-  .logo {
-      color: #ffffff;
-  }
+    .logo {
+        color: #ffffff;
+    }
 
-  .nav-links a {
-      color: #ffffff;
-  }
+    .nav-links a {
+        color: #ffffff;
+        background-color: transparent;
+        transition: all 0.3s ease-in-out;
+    }
 
-  .nav-links a:hover {
-      color: #297db4;
-  }
+    .nav-links a:hover {
+        color: #ffffff;
+        background-color: #1c5d88;
+    }
 
-  .nav-links .router-link-exact-active {
-    color: #297db4;
-  }
+    .nav-links a::after {
+        background: #ffffff;
+    }
+
+    .nav-links .router-link-exact-active {
+        color: #ffffff;
+        border-bottom: 3px solid #ffffff;
+    }
 }
+
 </style>

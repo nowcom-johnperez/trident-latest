@@ -3,18 +3,16 @@
     <TopNav />
 
     <div id="wiki-container" class="container">
-      <div class="markdown-body mt-10" ref="wikiContent" v-html="wikiContent"></div>
+      <div style="flex: 1">
+        <div v-if="loading" class="loader">
+          <i class="fa fa-spinner fa-spin"></i> Loading Wiki Please Wait...
+        </div>
+        <div class="markdown-body mt-10" ref="wikiContent" v-html="wikiContent"></div>
+      </div>
       <div class="right-sidebar">
         <h1>Wiki</h1>
         <ul class="toc">
           <li v-for="wiki in wikiList"><a :href="`#${encodeURIComponent(wiki.slug)}`" @click="clickOnSideBar(wiki.slug)">{{ formatLinkString(wiki.title) }}</a></li>
-          <!-- <li><a href="#section2">Section 2</a>
-            <ul>
-              <li><a href="#section2-1">Section 2.1</a></li>
-              <li><a href="#section2-2">Section 2.2</a></li>
-            </ul>
-          </li>
-          <li><a href="#section3">Section 3</a></li> -->
         </ul>
       </div>
     </div>
@@ -38,6 +36,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       wikiList: [],
       wikiContent: null,
       list: [],
@@ -86,6 +85,7 @@ export default {
     },
     async getWikiData(wikiId) {
       try {
+        this.loading = true
         const res = await wikiService.getById(wikiId);
         const content = await this.prependBaseUrlToUploads(res.content, GITLAB_SOURCE_URL);
         this.wikiContent = marked(content);
@@ -94,6 +94,8 @@ export default {
           title: 'Error',
           message: `Error fetching wiki ${wikiId}`,
         }, { root: true });
+      } finally {
+        this.loading = false
       }
       this.$nextTick(() => {
         this.setupLinkHandlers()
@@ -164,7 +166,6 @@ export default {
   }
 
   .markdown-body {
-    flex: 1;
     margin-right: 20px;
     margin-bottom: 20px;
   }
