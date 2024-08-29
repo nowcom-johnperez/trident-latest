@@ -373,25 +373,6 @@ background-color: #4caf50;
   }
 }
 
-.markdown-body {
-  max-width: 60vw;
-  padding: 20px; /* adds padding around the content */
-}
-
-.markdown-body pre {
-  max-width: 100%;
-  overflow-x: auto;
-}
-
-.markdown-body pre code {
-    display: block;
-    overflow-x: auto;
-    white-space: pre;
-    padding: 1em;
-    background-color: #f6f8fa;
-    border-radius: 6px;
-}
-
 .card {
   border: 2px solid grey;
   border-radius: 5px;
@@ -403,9 +384,40 @@ background-color: #4caf50;
   display: flex;
   align-items: center;
 }
+
 .copy-container {
   font-size: 1.2rem;
   cursor: pointer;
+}
+
+/* MARKDOWN */
+.markdown-body {
+  max-width: 60vw;
+  padding: 20px; /* adds padding around the content */
+}
+
+.markdown-body pre {
+  max-width: 100%;
+  overflow-x: auto;
+  background-color: none;
+}
+
+.markdown-body pre code {
+    display: block;
+    overflow-x: auto;
+    white-space: pre;
+    padding: 1em;
+    border-radius: 6px;
+}
+
+.theme-dark .markdown-body pre {
+  background-color: #f6f8fa;
+  color: black;
+}
+
+.theme-light .markdown-body pre {
+  background-color: #161b22;
+  color: white;
 }
 
 .theme-dark .markdown-body img {
@@ -415,6 +427,8 @@ background-color: #4caf50;
 .theme-light .markdown-body img {
   background-color: #fff !important;
 }
+
+/* END MARKDOWN */
 
 /* pagination (always make sure this is at the bottom) */
 .smart-pagination {
