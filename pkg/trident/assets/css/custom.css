@@ -373,6 +373,25 @@ background-color: #4caf50;
   }
 }
 
+.markdown-body {
+  max-width: 60vw;
+  padding: 20px; /* adds padding around the content */
+}
+
+.markdown-body pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.markdown-body pre code {
+    display: block;
+    overflow-x: auto;
+    white-space: pre;
+    padding: 1em;
+    background-color: #f6f8fa;
+    border-radius: 6px;
+}
+
 .card {
   border: 2px solid grey;
   border-radius: 5px;
