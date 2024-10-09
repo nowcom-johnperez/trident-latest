@@ -1,6 +1,5 @@
 <template>
   <div>
-    <TopNav />
     <div v-if="loading" class="loader">
       <i class="fa fa-spinner fa-spin"></i> Loading Data Please Wait...
     </div>

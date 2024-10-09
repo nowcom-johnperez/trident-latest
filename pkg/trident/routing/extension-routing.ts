@@ -1,19 +1,20 @@
 // Don't forget to create a VueJS page called index.vue in the /pages folder!!!
 import TridentPage from '../pages/TridentPage.vue';
 import WikiPage from '../pages/Wiki2Page.vue';
-import WishPage from '../pages/WishPage.vue';
-import DevToolsPage from '../pages/DevToolsPage.vue';
-import HomePage from '../pages/HomePage.vue';
-import SamplePage from '../pages/SamplePage.vue';
-import HomePage1 from '../pages/homepage-1.vue';
-import PlainLayout from '../layouts/PlainLayout.vue';
+// import WishPage from '../pages/WishPage.vue';
+// import DevToolsPage from '../pages/DevToolsPage.vue';
+// import HomePage from '../pages/HomePage.vue';
+// import SamplePage from '../pages/SamplePage.vue';
+// import HomePage1 from '../pages/homepage-1.vue';
+// import PlainLayout from '../layouts/PlainLayout.vue';
+import NowcomLayout from '../layouts/NowcomLayout.vue';
 
 import { PRODUCT_NAME, PRODUCT_ROUTE_NAME, BLANK_CLUSTER, TRIDENT_PAGE_NAME, WIKI_PAGE_NAME, HOME, DEV_TOOLS_PAGE_NAME, WISH_PAGE_NAME, SAMPLE_PAGE } from '../config/constants';
 
 const routes = [
   {
     path: `/${PRODUCT_ROUTE_NAME}/c/:cluster`,
-    component: PlainLayout,
+    component: NowcomLayout,
     meta: {
       product: PRODUCT_NAME,
       cluster: BLANK_CLUSTER,
@@ -73,16 +74,20 @@ const routes = [
   //     pkg:     PRODUCT_NAME
   //   }
   // },
-  {
-    name:      `${ PRODUCT_ROUTE_NAME }-c-cluster-${ DEV_TOOLS_PAGE_NAME }`,
-    path:      `/${ PRODUCT_ROUTE_NAME }/c/:cluster/${DEV_TOOLS_PAGE_NAME}`,
-    component: DevToolsPage,
-    meta:      {
-      product: PRODUCT_NAME,
-      cluster: BLANK_CLUSTER,
-      pkg:     PRODUCT_NAME
-    }
-  },
+
+  // DEPRECATED
+  // {
+  //   name:      `${ PRODUCT_ROUTE_NAME }-c-cluster-${ DEV_TOOLS_PAGE_NAME }`,
+  //   path:      `/${ PRODUCT_ROUTE_NAME }/c/:cluster/${DEV_TOOLS_PAGE_NAME}`,
+  //   component: DevToolsPage,
+  //   meta:      {
+  //     product: PRODUCT_NAME,
+  //     cluster: BLANK_CLUSTER,
+  //     pkg:     PRODUCT_NAME
+  //   }
+  // },
+
+
   // {
   //   name:      `${ PRODUCT_ROUTE_NAME }-c-cluster-${ WIKI_PAGE_NAME }`,
   //   path:      `/${ PRODUCT_ROUTE_NAME }/c/:cluster/${WIKI_PAGE_NAME}`,
@@ -94,26 +99,28 @@ const routes = [
   //     pkg:     PRODUCT_NAME
   //   }
   // },
-  {
-    name:      `${ PRODUCT_ROUTE_NAME }-c-cluster-${ WISH_PAGE_NAME }`,
-    path:      `/${ PRODUCT_ROUTE_NAME }/c/:cluster/${WISH_PAGE_NAME}`,
-    component: WishPage,
-    meta:      {
-      product: PRODUCT_NAME,
-      cluster: BLANK_CLUSTER,
-      pkg:     PRODUCT_NAME
-    }
-  },
-  {
-    name:      `${ PRODUCT_ROUTE_NAME }-c-cluster-${ SAMPLE_PAGE }`,
-    path:      `/${ PRODUCT_ROUTE_NAME }/c/:cluster/${SAMPLE_PAGE}`,
-    component: SamplePage,
-    meta:      {
-      product: PRODUCT_NAME,
-      cluster: BLANK_CLUSTER,
-      pkg:     PRODUCT_NAME
-    }
-  }
+
+  // DEPRECATED
+  // {
+  //   name:      `${ PRODUCT_ROUTE_NAME }-c-cluster-${ WISH_PAGE_NAME }`,
+  //   path:      `/${ PRODUCT_ROUTE_NAME }/c/:cluster/${WISH_PAGE_NAME}`,
+  //   component: WishPage,
+  //   meta:      {
+  //     product: PRODUCT_NAME,
+  //     cluster: BLANK_CLUSTER,
+  //     pkg:     PRODUCT_NAME
+  //   }
+  // },
+  // {
+  //   name:      `${ PRODUCT_ROUTE_NAME }-c-cluster-${ SAMPLE_PAGE }`,
+  //   path:      `/${ PRODUCT_ROUTE_NAME }/c/:cluster/${SAMPLE_PAGE}`,
+  //   component: SamplePage,
+  //   meta:      {
+  //     product: PRODUCT_NAME,
+  //     cluster: BLANK_CLUSTER,
+  //     pkg:     PRODUCT_NAME
+  //   }
+  // }
 ];
 
 export default routes;

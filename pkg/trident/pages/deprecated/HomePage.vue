@@ -58,14 +58,14 @@
 </template>
 
 <script>
-import cButton from '../components/common/Button'
-import K8STable from '../components/home/k8s-table'
-import Virtualization from '../components/home/virtualization'
+import cButton from '../../components/common/Button'
+import K8STable from '../../components/home/k8s-table'
+import Virtualization from '../../components/home/virtualization'
 import { Banner } from '@components/Banner';
 import { getVendor } from '@shell/config/private-label';
-import routeInit from '../mixins/init'
-import Modal from '../components/common/Modal.vue';
-import WishForm from '../components/forms/wish-form.vue';
+import routeInit from '../../../mixins/init'
+import Modal from '../../components/common/Modal.vue';
+import WishForm from '../../components/forms/wish-form.vue';
 export default {
   name: 'HomePage',
   // layout: 'plain',
