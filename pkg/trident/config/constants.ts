@@ -21,4 +21,5 @@ export const INFRASTRUCTURE = {
   LIST_NAT_GATEWAY: 'nat.gateway',
   ROAD_MAP: 'roadmap',
   WISH_PAGE: 'wish',
+  HOME: 'Home'
 }

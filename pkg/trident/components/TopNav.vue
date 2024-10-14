@@ -35,7 +35,10 @@ export default {
   computed: {
     homeLocation() {
       return {
-        name: `${INFRASTRUCTURE.PRODUCT_NAME}-c-cluster-${HOME}`
+        name: `${INFRASTRUCTURE.PRODUCT_NAME}-c-cluster-${INFRASTRUCTURE.HOME}`,
+        params: {
+          cluster: BLANK_CLUSTER
+        }
       }
     },
     tridentLocation() {
@@ -63,22 +66,40 @@ export default {
     infraLocation() {
       return {
         k8: {
-          name: `${INFRASTRUCTURE.PRODUCT_NAME}-c-cluster-${INFRASTRUCTURE.LIST_K8}`
+          name: `${INFRASTRUCTURE.PRODUCT_NAME}-c-cluster-${INFRASTRUCTURE.LIST_K8}`,
+          params: {
+            cluster: BLANK_CLUSTER
+          }
         },
         network: {
-          name: `${INFRASTRUCTURE.PRODUCT_NAME}-c-cluster-${INFRASTRUCTURE.LIST_NETWORK}`
+          name: `${INFRASTRUCTURE.PRODUCT_NAME}-c-cluster-${INFRASTRUCTURE.LIST_NETWORK}`,
+          params: {
+            cluster: BLANK_CLUSTER
+          }
         },
         firewall: {
-          name: `${INFRASTRUCTURE.PRODUCT_NAME}-c-cluster-${INFRASTRUCTURE.LIST_FIREWALL}`
+          name: `${INFRASTRUCTURE.PRODUCT_NAME}-c-cluster-${INFRASTRUCTURE.LIST_FIREWALL}`,
+          params: {
+            cluster: BLANK_CLUSTER
+          }
         },
         dns: {
-          name: `${INFRASTRUCTURE.PRODUCT_NAME}-c-cluster-${INFRASTRUCTURE.LIST_DNS}`
+          name: `${INFRASTRUCTURE.PRODUCT_NAME}-c-cluster-${INFRASTRUCTURE.LIST_DNS}`,
+          params: {
+            cluster: BLANK_CLUSTER
+          }
         },
         dhcp: {
-          name: `${INFRASTRUCTURE.PRODUCT_NAME}-c-cluster-${INFRASTRUCTURE.LIST_DHCP}`
+          name: `${INFRASTRUCTURE.PRODUCT_NAME}-c-cluster-${INFRASTRUCTURE.LIST_DHCP}`,
+          params: {
+            cluster: BLANK_CLUSTER
+          }
         },
         roadmap: {
-          name: `${INFRASTRUCTURE.PRODUCT_NAME}-c-cluster-${INFRASTRUCTURE.ROAD_MAP}`
+          name: `${INFRASTRUCTURE.PRODUCT_NAME}-c-cluster-${INFRASTRUCTURE.ROAD_MAP}`,
+          params: {
+            cluster: BLANK_CLUSTER
+          }
         }
       }
     }
