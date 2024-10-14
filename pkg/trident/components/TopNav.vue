@@ -27,7 +27,9 @@
 </template>
 
 <script>
-import { PRODUCT_NAME, HOME, INFRASTRUCTURE, TRIDENT_PAGE_NAME, RESOURCE_MANAGEMENT, WIKI_PAGE_NAME } from '../config/constants';
+import { getConfig } from '../config/api';
+import { PRODUCT_NAME, HOME, INFRASTRUCTURE, TRIDENT_PAGE_NAME, RESOURCE_MANAGEMENT, WIKI_PAGE_NAME, BLANK_CLUSTER } from '../config/constants';
+const { CLUSTER } = getConfig();
 export default {
   name: 'TopNav',
   computed: {
@@ -39,13 +41,22 @@ export default {
     tridentLocation() {
       return {
         app: {
-          name: `${PRODUCT_NAME}-c-cluster-${TRIDENT_PAGE_NAME}`
+          name: `${PRODUCT_NAME}-c-cluster-${TRIDENT_PAGE_NAME}`,
+          params: {
+            cluster: BLANK_CLUSTER
+          }
         },
         wiki: {
-          name: `${PRODUCT_NAME}-c-cluster-${WIKI_PAGE_NAME}`
+          name: `${PRODUCT_NAME}-c-cluster-${WIKI_PAGE_NAME}`,
+          params: {
+            cluster: BLANK_CLUSTER
+          }
         },
         harvester: {
-          name: `${PRODUCT_NAME}-c-cluster-${RESOURCE_MANAGEMENT}`
+          name: `${PRODUCT_NAME}-c-cluster-${RESOURCE_MANAGEMENT}`,
+          params: {
+            cluster: CLUSTER
+          }
         }
       }
     },
