@@ -47,12 +47,12 @@
 
 <script>
 import SortableTable from '@shell/components/ResourceTable.vue'
-import SideBar from '../components/common/SideBar.vue'
-import Overview from '../components/trident/Overview.vue'
-import { DEV_TOOLS_TABLE_HEADERS } from '../config/tables'
-import IconLink from '../components/common/IconLink.vue';
+import SideBar from '../../components/common/SideBar.vue'
+import Overview from '../../components/trident/Overview.vue'
+import { DEV_TOOLS_TABLE_HEADERS } from '../../../config/tables'
+import IconLink from '../../components/common/IconLink.vue';
 import CopyToClipboard from '@shell/components/CopyToClipboard.vue'
-import routeInit from '../mixins/init'
+import routeInit from '../../../mixins/init'
 export default {
   name: 'DevToolsPage',
   mixins: [routeInit],

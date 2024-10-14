@@ -1,7 +1,5 @@
 <template>
   <div>
-    <TopNav />
-
     <div id="wiki-container" class="container">
       <div style="flex: 1">
         <div v-if="loading" class="loader">

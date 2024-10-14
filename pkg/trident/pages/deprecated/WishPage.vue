@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import routeInit from '../mixins/init'
+import routeInit from '../../mixins/init'
 export default {
   name: 'WishPage',
   mixins: [routeInit],

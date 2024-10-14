@@ -1,4 +1,8 @@
 @import '../font-awesome-4.7.0/css/font-awesome.min.css';
+HEADER {
+  z-index: 17 !important;
+}
+
 .idp-container .dashboard-content {
   padding-left: 0 !important;
 }
